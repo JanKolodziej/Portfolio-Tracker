@@ -58,7 +58,7 @@ The application follows the **MVVM (Model–View–ViewModel)** pattern for clea
 
 1. Clone this repository  
    ```bash
-   git clone https://github.com/yourusername/Portfolio-Tracker.git
+   git clone https://github.com/JanKolodziej/Portfolio-Tracker.git
    ```
 2. Open the solution in **Visual Studio 2022**
 3. Select the Windows target platform
