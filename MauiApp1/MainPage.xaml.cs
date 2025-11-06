@@ -11,7 +11,6 @@ namespace MauiApp1
 {
     public partial class MainPage : ContentPage
     {
-
         //Wykres kołowy
         public IEnumerable<ISeries> SeriesKolowyDywidendy { get; set; } = new ISeries[0];
         public IEnumerable<ISeries> SeriesKolowyOtwarte { get; set; } = new ISeries[0];
