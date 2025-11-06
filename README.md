@@ -19,7 +19,7 @@ The app allows users to **import data directly from XTB-generated files**, view 
 
 ## 🧠 Architecture
 
-The application follows the **MVVM (Model–View–ViewModel)** pattern for clean separation of concerns and scalability.
+
 
 ```
 📁 Biblioteka Klas			   // Class library
