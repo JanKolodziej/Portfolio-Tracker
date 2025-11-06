@@ -22,7 +22,7 @@ The app allows users to **import data directly from XTB-generated files**, view 
 The application follows the **MVVM (Model–View–ViewModel)** pattern for clean separation of concerns and scalability.
 
 ```
-📁 Models
+📁 Biblioteka Klas			   // Class library
  ├── Konto.cs                  // Investment account
  ├── KontoSumaryczne.cs        // Account summary
  ├── OtwartaPozycja.cs         // Open position
@@ -32,15 +32,12 @@ The application follows the **MVVM (Model–View–ViewModel)** pattern for clea
  ├── TabelaGrupa.cs            // Grouped data table
  └── OperacjeGotowkowe.cs      // Cash operations
 
-📁 Views
+📁 MauiApp1
  └── MainPage.xaml              // Main interface
 
-📁 ViewModels
- └── (to be implemented)
+📁 MauiApp1.Test			
+ └── UnitTest1.cs
 
-📁 Helpers
- ├── UI.cs
- └── GlobalXmlns.cs
 ```
 
 ---
@@ -61,7 +58,7 @@ The application follows the **MVVM (Model–View–ViewModel)** pattern for clea
 
 1. Clone this repository  
    ```bash
-   git clone https://github.com/yourusername/XTB-Portfolio-Tracker.git
+   git clone https://github.com/yourusername/Portfolio-Tracker.git
    ```
 2. Open the solution in **Visual Studio 2022**
 3. Select the Windows target platform
@@ -105,5 +102,5 @@ Both libraries are distributed under the MIT License.
 
 ---
 
-> **XTB Portfolio Tracker** is an independent project and is not affiliated with or endorsed by XTB S.A.  
+> **Portfolio Tracker** is an independent project and is not affiliated with or endorsed by XTB S.A.  
 > It was built for educational and personal portfolio purposes.
