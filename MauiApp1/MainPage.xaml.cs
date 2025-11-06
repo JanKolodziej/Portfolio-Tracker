@@ -51,6 +51,7 @@ namespace MauiApp1
 
         public MainPage()
         {
+
             
             InitializeComponent();
 
