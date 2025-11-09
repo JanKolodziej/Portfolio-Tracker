@@ -38,6 +38,7 @@ namespace Biblioteka_Klas
 
         public List<RekordTabelaZysku> ListaRekordówTabeliZysku { get; set; } = new();
         public List<RekordTabelaZysku> ListaZamknietychPozycjiW_Tabeli { get; set; } = new();
+        
         //**********************************
 
         //Zyski na pozycjach
@@ -141,7 +142,7 @@ namespace Biblioteka_Klas
                 if (operacja.Type == TypOperacjiGotowkowej.deposit || operacja.Type == TypOperacjiGotowkowej.withdrawal ||
                     operacja.Type == TypOperacjiGotowkowej.Subaccount_Transfer || operacja.Type == TypOperacjiGotowkowej.IKE_Deposit)
                 {
-                    SP500PozycjaDnia dzienSp = Znajdz_Najblizszy_Sp(operacja.Date);
+                    SP500PozycjaDnia dzienSp = SP500PozycjaDnia.Znajdz_Najblizszy_Sp(operacja.Date);
                     liczbaPozycjiNaSP += operacja.Amount / dzienSp.KursDolara / dzienSp.CenaSrednia;
                 }
 
@@ -149,27 +150,7 @@ namespace Biblioteka_Klas
             return (liczbaPozycjiNaSP * ostatniaCenaSP*ostatniKursDolara -Wplaty)/Wplaty*100;
         }
 
-        /// <summary>
-        /// Znajduje najbliższą pozycje SP500 dla zadanej daty
-        /// </summary>
-        /// <param name="dataDoSprawdzenia"></param>
-        /// <returns></returns>
-        private SP500PozycjaDnia Znajdz_Najblizszy_Sp(DateTime dataDoSprawdzenia)
-        {
-            int wynikDateCompare = -1;
-            foreach (var dzienSp in SP500PozycjaDnia.ListaSP500PozycjaDnia)
-            {
-                wynikDateCompare = DateTime.Compare(dzienSp.Data, dataDoSprawdzenia.Date); //Porównujemy daty dla daty tej samej funkcja zwraca 0, dla mniejszej -1, dla większej +1
-                if (wynikDateCompare == 0 || wynikDateCompare > 0)                          // Daty w liście są pokolei więc jeżeli nie istnieje data ta sama
-                {                                                                          // To z -1 przeskoczymy do +1 
-                    return dzienSp;
-                }
 
-            }
-            return SP500PozycjaDnia.ListaSP500PozycjaDnia.Last();           //Jedyny przypadek dla któego poprzedni warunek nie zadziała to gdy wpłacimy "dzisiaj"
-                                                                            //A ostatni kurs Sp jest z "wczoraj", więc zwracamy ostatni isniejący kurs
-
-        }
 
         /// <summary>
         /// Przechodzi po wszystkich listach, otwarte pozycje, zamkniete i dywidendy i dodaje je do listy ListaRekordówTabela

@@ -1,5 +1,7 @@
 ﻿using Biblioteka_Klas;
+using DocumentFormat.OpenXml.Wordprocessing;
 using LiveChartsCore;
+using LiveChartsCore.Defaults;
 using LiveChartsCore.Kernel;
 using LiveChartsCore.SkiaSharpView;
 using Microsoft.Maui.Controls;
@@ -11,6 +13,10 @@ namespace MauiApp1
 {
     public partial class MainPage : ContentPage
     {
+        //Wykres Sp500
+        public IEnumerable<ISeries> SeriesSP500 { get; set; } = new ISeries[0];
+        public Axis[] XAxesSP500 { get; set; } = new Axis[0];
+        public Axis[] YAxesSP500 { get; set; } = new Axis[0];
         //Wykres kołowy
         public IEnumerable<ISeries> SeriesKolowyDywidendy { get; set; } = new ISeries[0];
         public IEnumerable<ISeries> SeriesKolowyOtwarte { get; set; } = new ISeries[0];
@@ -56,8 +62,84 @@ namespace MauiApp1
 
             
         }
+        /// <summary>
+        /// Ustawia dane do wykresu S&P500
+        /// </summary>
+        private void UstawienieWykresSP500()
+        {
+            if(Konto_uzytkownika == null)
+                return ;   
+            var listaSp = new List<DateTimePoint>();
+            decimal ostatniaCenaSP = SP500PozycjaDnia.ListaSP500PozycjaDnia.Last().CenaSrednia;
+            decimal ostatniKursDolara = SP500PozycjaDnia.ListaSP500PozycjaDnia.Last().KursDolara;
+            decimal liczbaPozycjiNaSP = 0;
 
-      
+
+            foreach (var operacja in Konto_uzytkownika.ListaOperacjiGotowkowych.OrderBy(date=>date.Date))
+            {
+                if (operacja.Type == TypOperacjiGotowkowej.deposit || operacja.Type == TypOperacjiGotowkowej.withdrawal ||
+                    operacja.Type == TypOperacjiGotowkowej.Subaccount_Transfer || operacja.Type == TypOperacjiGotowkowej.IKE_Deposit)
+                {
+                    if(listaSp.Count>0)
+                    {
+                        if (operacja.Date.Date== listaSp.Last().DateTime.Date)  //Jeżeli data jest ta sama co ostatnio musimy nadpisać ostatni punkt
+                        {
+                            listaSp.RemoveAt(listaSp.Count - 1);
+                        }
+                        else if (operacja.Date.Date > listaSp.Last().DateTime.Date.AddDays(1))
+                        {
+                            for(int i =1; i<(operacja.Date.Date- listaSp.Last().DateTime.Date).Days;i++)
+                            {
+                                SP500PozycjaDnia SP = SP500PozycjaDnia.Znajdz_Najblizszy_Sp(listaSp.Last().DateTime.Date.AddDays(1));
+                                listaSp.Add(new DateTimePoint(SP.Data.Date,Math.Round( Convert.ToDouble(liczbaPozycjiNaSP * SP.KursDolara*SP.CenaSrednia),2)));
+
+                            }
+                        }
+                    }
+                    
+                    
+                    SP500PozycjaDnia dzienSp = SP500PozycjaDnia.Znajdz_Najblizszy_Sp(operacja.Date);
+                    liczbaPozycjiNaSP += operacja.Amount / dzienSp.KursDolara / dzienSp.CenaSrednia;
+                    listaSp.Add(new DateTimePoint(operacja.Date.Date, Math.Round(Convert.ToDouble(liczbaPozycjiNaSP * dzienSp.KursDolara * dzienSp.CenaSrednia),2)));  
+                }
+
+            }
+            
+            
+            SeriesSP500 = new ISeries[]
+            {
+                new LineSeries<DateTimePoint>
+                {
+                    Name = "S&P500",
+                    Values = listaSp,
+                    Fill = null,
+                    GeometrySize = 0
+                }
+            };
+
+            XAxesSP500 = new Axis[]
+            {
+                new DateTimeAxis(TimeSpan.FromDays(30),dt => dt.ToString("MM.yyyy"))
+                {
+                    MinLimit = listaSp.First().DateTime.Ticks
+                }
+            };
+            
+
+            YAxesSP500 = new Axis[]
+            {
+                new Axis
+                {
+                    Name = "Wartość [PLN]",
+                    MinLimit = 0,
+                }
+            };
+
+            OnPropertyChanged(nameof(SeriesSP500));
+            OnPropertyChanged(nameof(XAxesSP500));
+            OnPropertyChanged(nameof(YAxesSP500));
+
+        }
 
 
 
@@ -99,48 +181,8 @@ namespace MauiApp1
             {
                 WynikKontaLabel.TextColor = Colors.Red;
             }
-            //Ustawienie wykresu kołowego procentowego udziału w koncie
-            decimal wartoscOtawrtychPozycji = 0;
-            foreach(var element in Konto_uzytkownika.ListaRekordówTabeliZysku)
-            {
-                wartoscOtawrtychPozycji += element.CenaAktualna * element.IloscAkcji;
-            }
-            double procentPozostalych = 0;
-            var listaSeriiKolowego = new List<ISeries>();
-            foreach (var element in Konto_uzytkownika.ListaRekordówTabeliZysku)
-            {
-                double wartoscProcentowa = Convert.ToDouble(Math.Round(100 * element.CenaAktualna * element.IloscAkcji / wartoscOtawrtychPozycji));
-                if(wartoscProcentowa < 2)
-                {
-                    procentPozostalych += wartoscProcentowa;
-                }
-                else
-                {
-                    listaSeriiKolowego.Add( new PieSeries<double>
-                    {
-                        Name = element.Symbol,
-                        Values = new[] { wartoscProcentowa }
-                        //DataLabelsFormatter = point => $"{point.Coordinate.SecondaryValue}: {point.Coordinate.PrimaryValue:0.0} "
-
-
-
-                    });
-                }
-                    
-            }
-            if(procentPozostalych > 0)
-            {
-                listaSeriiKolowego.Add(new PieSeries<double>
-                {
-                    Name = "Pozostałe",
-                    Values = new[] { procentPozostalych}
-
-                });
-            }
-            SeriesKolowyOtwarte = listaSeriiKolowego;
-
-            OnPropertyChanged(nameof(SeriesKolowyOtwarte));
-                
+            UstawienieWykresSP500();
+            UstawienieWykresuKolowegoWartosciKonta();
             Ustawienie_Wykresu_Kolowego_dywidend();
             Ustawienie_Wykresu_Slupki_Miesiace();
             Ustawienie_Wykresu_Slupki_Lata();
@@ -189,6 +231,54 @@ namespace MauiApp1
             BindingContext = this;
             
 
+        }
+        /// <summary>
+        /// Ustawienie wykresu kołowego procentowego udziału w koncie
+        /// </summary>
+        private void UstawienieWykresuKolowegoWartosciKonta()
+        {
+            if(Konto_uzytkownika == null)
+            { return; }
+            decimal wartoscOtawrtychPozycji = 0;
+            foreach (var element in Konto_uzytkownika.ListaRekordówTabeliZysku)
+            {
+                wartoscOtawrtychPozycji += element.CenaAktualna * element.IloscAkcji;
+            }
+            double procentPozostalych = 0;
+            var listaSeriiKolowego = new List<ISeries>();
+            foreach (var element in Konto_uzytkownika.ListaRekordówTabeliZysku)
+            {
+                double wartoscProcentowa = Convert.ToDouble(Math.Round(100 * element.CenaAktualna * element.IloscAkcji / wartoscOtawrtychPozycji));
+                if (wartoscProcentowa < 2)
+                {
+                    procentPozostalych += wartoscProcentowa;
+                }
+                else
+                {
+                    listaSeriiKolowego.Add(new PieSeries<double>
+                    {
+                        Name = element.Symbol,
+                        Values = new[] { wartoscProcentowa }
+                        //DataLabelsFormatter = point => $"{point.Coordinate.SecondaryValue}: {point.Coordinate.PrimaryValue:0.0} "
+
+
+
+                    });
+                }
+
+            }
+            if (procentPozostalych > 0)
+            {
+                listaSeriiKolowego.Add(new PieSeries<double>
+                {
+                    Name = "Pozostałe",
+                    Values = new[] { procentPozostalych }
+
+                });
+            }
+            SeriesKolowyOtwarte = listaSeriiKolowego;
+
+            OnPropertyChanged(nameof(SeriesKolowyOtwarte));
         }
         /// <summary>
         /// tworzy wykres słupkowy dywidend poszczególnych akcji z podziałęm na miesiące

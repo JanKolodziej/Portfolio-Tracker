@@ -24,6 +24,8 @@
                 <Label x:Name="WynikKontaLabel" Text="Empty"/>
                 <Label x:Name="WynikSPLabel" Text="Empty"/>
             </HorizontalStackLayout>
+            <lvc:CartesianChart x:Name="WykresKontoSP500" x:DataType="local:MainPage" WidthRequest="1000" HeightRequest="500" Series="{Binding SeriesSP500}"  YAxes="{Binding YAxesSP500}" XAxes="{Binding XAxesSP500}" />
+
             <HorizontalStackLayout>
                 <lvc:PieChart x:Name="WykresKolowyDywidendy" x:DataType="local:MainPage" WidthRequest="500" HeightRequest="500" Series="{Binding SeriesKolowyDywidendy}">
                     <lvc:PieChart.Title>
