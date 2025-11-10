@@ -70,8 +70,8 @@ namespace MauiApp1
             if(Konto_uzytkownika == null)
                 return ;   
             var listaSp = new List<DateTimePoint>();
-            decimal ostatniaCenaSP = SP500PozycjaDnia.ListaSP500PozycjaDnia.Last().CenaSrednia;
-            decimal ostatniKursDolara = SP500PozycjaDnia.ListaSP500PozycjaDnia.Last().KursDolara;
+            decimal ostatniaCenaSP = SP500Pozycja.ListaSP500PozycjaDnia.Last().CenaSrednia;
+            decimal ostatniKursDolara = SP500Pozycja.ListaSP500PozycjaDnia.Last().KursDolara;
             decimal liczbaPozycjiNaSP = 0;
 
 
@@ -90,7 +90,7 @@ namespace MauiApp1
                         {
                             for(int i =1; i<(operacja.Date.Date- listaSp.Last().DateTime.Date).Days;i++)
                             {
-                                SP500PozycjaDnia SP = SP500PozycjaDnia.Znajdz_Najblizszy_Sp(listaSp.Last().DateTime.Date.AddDays(1));
+                                SP500Pozycja SP = SP500Pozycja.Znajdz_Najblizszy_Sp(listaSp.Last().DateTime.Date.AddDays(1));
                                 listaSp.Add(new DateTimePoint(SP.Data.Date,Math.Round( Convert.ToDouble(liczbaPozycjiNaSP * SP.KursDolara*SP.CenaSrednia),2)));
 
                             }
@@ -98,7 +98,7 @@ namespace MauiApp1
                     }
                     
                     
-                    SP500PozycjaDnia dzienSp = SP500PozycjaDnia.Znajdz_Najblizszy_Sp(operacja.Date);
+                    SP500Pozycja dzienSp = SP500Pozycja.Znajdz_Najblizszy_Sp(operacja.Date);
                     liczbaPozycjiNaSP += operacja.Amount / dzienSp.KursDolara / dzienSp.CenaSrednia;
                     listaSp.Add(new DateTimePoint(operacja.Date.Date, Math.Round(Convert.ToDouble(liczbaPozycjiNaSP * dzienSp.KursDolara * dzienSp.CenaSrednia),2)));  
                 }

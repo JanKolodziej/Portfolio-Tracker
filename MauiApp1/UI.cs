@@ -63,15 +63,15 @@ namespace MauiApp1
                                       //Na dzień pisania tego kodu tj. 10.10.2025 174 pozycje nie miały swojego kursu
 
 
-                        SP500PozycjaDnia pozycjaDnia = new(SP500PozycjaDnia.ListaSP500PozycjaDnia.Last().KursDolara, data, cenaSrednia);
-                        SP500PozycjaDnia.ListaSP500PozycjaDnia.Add(pozycjaDnia);
+                        SP500Pozycja pozycjaDnia = new(SP500Pozycja.ListaSP500PozycjaDnia.Last().KursDolara, data, cenaSrednia);
+                        SP500Pozycja.ListaSP500PozycjaDnia.Add(pozycjaDnia);
                         pom++;
 
                     }
                     else
                     {
-                        SP500PozycjaDnia pozycjaDnia = new(kursDolara, data, cenaSrednia);
-                        SP500PozycjaDnia.ListaSP500PozycjaDnia.Add(pozycjaDnia);
+                        SP500Pozycja pozycjaDnia = new(kursDolara, data, cenaSrednia);
+                        SP500Pozycja.ListaSP500PozycjaDnia.Add(pozycjaDnia);
                     }
 
                 }

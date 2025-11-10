@@ -24,9 +24,9 @@ namespace MauiApp1
             });
 
             // Jeśli lista SP500 nie jest jeszcze wczytana, wczytaj ją asynchronicznie
-            if (SP500PozycjaDnia.ListaSP500PozycjaDnia.Count == 0)
+            if (SP500Pozycja.ListaSP500PozycjaDnia.Count == 0)
             {
-                await UI.Wczytaj_Z_Pliku_SP();
+                SP500Pozycja.ListaSP500PozycjaDnia = Biblioteka_Klas.SQLiteDane.WczytajSP500();
             }
 
             // Otwórz okno wyboru pliku
@@ -42,7 +42,7 @@ namespace MauiApp1
 
             string sciezka = plik.FullPath;
 
-            // 🧠 (opcjonalnie) sprawdzenie, czy już wczytano ten plik:
+            //  (opcjonalnie) sprawdzenie, czy już wczytano ten plik:
             /*
             foreach (Konto konto1 in Konto.ListaKont)
             {

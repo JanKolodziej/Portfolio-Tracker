@@ -2,6 +2,7 @@
 using LiveChartsCore;
 using LiveChartsCore.SkiaSharpView.Maui;
 using SkiaSharp.Views.Maui.Controls.Hosting;
+using SQLitePCL;
 
 namespace MauiApp1
 {
@@ -9,6 +10,7 @@ namespace MauiApp1
     {
         public static MauiApp CreateMauiApp()
         {
+            SQLitePCL.Batteries.Init();
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseSkiaSharp()

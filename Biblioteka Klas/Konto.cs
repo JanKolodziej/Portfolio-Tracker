@@ -132,8 +132,8 @@ namespace Biblioteka_Klas
         /// </summary>
         public decimal Zarobek_Na_SP500()
         {
-            decimal ostatniaCenaSP = SP500PozycjaDnia.ListaSP500PozycjaDnia.Last().CenaSrednia;
-            decimal ostatniKursDolara = SP500PozycjaDnia.ListaSP500PozycjaDnia.Last().KursDolara;
+            decimal ostatniaCenaSP = SP500Pozycja.ListaSP500PozycjaDnia.Last().CenaSrednia;
+            decimal ostatniKursDolara = SP500Pozycja.ListaSP500PozycjaDnia.Last().KursDolara;
             decimal liczbaPozycjiNaSP = 0;
 
 
@@ -142,7 +142,7 @@ namespace Biblioteka_Klas
                 if (operacja.Type == TypOperacjiGotowkowej.deposit || operacja.Type == TypOperacjiGotowkowej.withdrawal ||
                     operacja.Type == TypOperacjiGotowkowej.Subaccount_Transfer || operacja.Type == TypOperacjiGotowkowej.IKE_Deposit)
                 {
-                    SP500PozycjaDnia dzienSp = SP500PozycjaDnia.Znajdz_Najblizszy_Sp(operacja.Date);
+                    SP500Pozycja dzienSp = SP500Pozycja.Znajdz_Najblizszy_Sp(operacja.Date);
                     liczbaPozycjiNaSP += operacja.Amount / dzienSp.KursDolara / dzienSp.CenaSrednia;
                 }
 
