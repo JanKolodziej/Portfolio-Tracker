@@ -21,17 +21,21 @@ namespace Biblioteka_Klas
         public static string connectionString = $"Data Source={sciezkaDoBazy}";
 
 
-        public static List<SP500Pozycja> WczytajSP500()
+        /// <summary>
+        /// Asynchronicznie wczytuje dane SP500 z bazy SQLite i zwraca listę pozycji
+        /// </summary>
+        /// <returns></returns>
+        public static async Task<List<SP500Pozycja>> WczytajSP500()
         {
             using (var connection = new SqliteConnection(connectionString))
             {
-                connection.Open();
+                await connection.OpenAsync();
                 Debug.WriteLine("Połączono z bazą danych SQLite.");
 
 
                 // Wykonaj zapytanie za pomocą Dapper i mapuj na listę SP500Dolar
-                var wyniki = connection.Query<SP500Pozycja>("Select * From SP500Dolar").AsList();
-                return wyniki;
+                 var wyniki = await connection.QueryAsync<SP500Pozycja>("Select * From SP500Dolar");
+                return wyniki.AsList();
             }
 
             

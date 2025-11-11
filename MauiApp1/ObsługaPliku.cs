@@ -26,7 +26,7 @@ namespace MauiApp1
             // Jeśli lista SP500 nie jest jeszcze wczytana, wczytaj ją asynchronicznie
             if (SP500Pozycja.ListaSP500PozycjaDnia.Count == 0)
             {
-                SP500Pozycja.ListaSP500PozycjaDnia = Biblioteka_Klas.SQLiteDane.WczytajSP500();
+                SP500Pozycja.ListaSP500PozycjaDnia = await Biblioteka_Klas.SQLiteDane.WczytajSP500();
             }
 
             // Otwórz okno wyboru pliku

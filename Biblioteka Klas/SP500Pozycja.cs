@@ -16,7 +16,7 @@ namespace Biblioteka_Klas
 
         public static List<SP500Pozycja> ListaSP500PozycjaDnia = new();
 
-       public SP500Pozycja() { }
+        public SP500Pozycja() { }
 
         public SP500Pozycja(decimal kursDolara, DateTime data, decimal cenaSrednia)
         {

@@ -9,6 +9,7 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Globalization;
 
+
 namespace MauiApp1
 {
     public partial class MainPage : ContentPage
@@ -63,19 +64,18 @@ namespace MauiApp1
             
         }
         /// <summary>
-        /// Ustawia dane do wykresu S&P500
+        /// Ustawia dane do wykresu SP500
         /// </summary>
-        private void UstawienieWykresSP500()
+        /// <param name="listaOperacjiGotowkowych"></param>
+        private void Ustawienie_Wykres_SP500(List<OperacjeGotowkowe> listaOperacjiGotowkowych)
         {
-            if(Konto_uzytkownika == null)
-                return ;   
             var listaSp = new List<DateTimePoint>();
             decimal ostatniaCenaSP = SP500Pozycja.ListaSP500PozycjaDnia.Last().CenaSrednia;
             decimal ostatniKursDolara = SP500Pozycja.ListaSP500PozycjaDnia.Last().KursDolara;
             decimal liczbaPozycjiNaSP = 0;
 
 
-            foreach (var operacja in Konto_uzytkownika.ListaOperacjiGotowkowych.OrderBy(date=>date.Date))
+            foreach (var operacja in listaOperacjiGotowkowych.OrderBy(date=>date.Date))
             {
                 if (operacja.Type == TypOperacjiGotowkowej.deposit || operacja.Type == TypOperacjiGotowkowej.withdrawal ||
                     operacja.Type == TypOperacjiGotowkowej.Subaccount_Transfer || operacja.Type == TypOperacjiGotowkowej.IKE_Deposit)
@@ -142,7 +142,8 @@ namespace MauiApp1
         }
 
 
-
+        
+        
         /// <summary>
         /// Metoda wywoływana przez WybierzPlikButton, wczytuje plik i go przetwarza
         /// </summary>
@@ -150,20 +151,24 @@ namespace MauiApp1
         /// <param name="e"></param>
         private async void WybierzPlik(object sender, EventArgs e)
         {
+            
             var konto = await new ObsługaPliku().Wczytaj_Plik();
 
             if(konto != null)
             {
                 Ustaw_Wygląd_MainPage(konto);
             }
+            
         }
 
         /// <summary>
         /// Ustawia wygląd MainPage 
         /// </summary>
         /// <param name="konto"></param>
-        private void Ustaw_Wygląd_MainPage(Konto konto)
+        private  void Ustaw_Wygląd_MainPage(Konto konto)
         {
+            Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();
             Konto_uzytkownika = konto;
             if (Konto_uzytkownika == null)
                 return;
@@ -181,12 +186,15 @@ namespace MauiApp1
             {
                 WynikKontaLabel.TextColor = Colors.Red;
             }
-            UstawienieWykresSP500();
-            UstawienieWykresuKolowegoWartosciKonta();
-            Ustawienie_Wykresu_Kolowego_dywidend();
-            Ustawienie_Wykresu_Slupki_Miesiace();
-            Ustawienie_Wykresu_Slupki_Lata();
+           
+           Ustawienie_Wykres_SP500(konto.ListaOperacjiGotowkowych);
+            Ustawienie_Wykresu_Kolowego_Wartosci_Konta(konto.ListaRekordówTabeliZysku);
+             Ustawienie_Wykresu_Kolowego_dywidend(konto.ListaKwotDywidend);
+            Ustawienie_Wykresu_Slupki_Miesiace(konto.ListaOperacjiGotowkowych);
+             Ustawienie_Wykresu_Slupki_Lata(konto.ListaOperacjiGotowkowych);
             Ustawienie_Tabeli_Zysku();
+             Ustawienie_Wykresu_Slupki_Lata(konto.ListaOperacjiGotowkowych);
+            
 
             //Zmiany tekstów po załadowaniu pliku
             PodajPlikLabel.Text = "Jeżeli chcesz, Dodaj kolejny konto do porównania";
@@ -211,6 +219,7 @@ namespace MauiApp1
                 KontoSumaryczne.Zsumuj_Wszystkie_Konta(listaoperacji, otwarte, zamkniete);
                 KontoSumaryczne kontoSumaryczne = new KontoSumaryczne(listaoperacji,zamkniete,otwarte);
                 
+
             }
 
 
@@ -229,24 +238,24 @@ namespace MauiApp1
             }
 
             BindingContext = this;
-            
 
+            stopwatch.Stop();
+            Debug.WriteLine($"Czas tworzenia konta : {stopwatch.ElapsedMilliseconds} ms");
         }
         /// <summary>
         /// Ustawienie wykresu kołowego procentowego udziału w koncie
         /// </summary>
-        private void UstawienieWykresuKolowegoWartosciKonta()
+        private void Ustawienie_Wykresu_Kolowego_Wartosci_Konta(List<RekordTabelaZysku> listaRekordTabelaZysku)
         {
-            if(Konto_uzytkownika == null)
-            { return; }
+            
             decimal wartoscOtawrtychPozycji = 0;
-            foreach (var element in Konto_uzytkownika.ListaRekordówTabeliZysku)
+            foreach (var element in listaRekordTabelaZysku)
             {
                 wartoscOtawrtychPozycji += element.CenaAktualna * element.IloscAkcji;
             }
             double procentPozostalych = 0;
             var listaSeriiKolowego = new List<ISeries>();
-            foreach (var element in Konto_uzytkownika.ListaRekordówTabeliZysku)
+            foreach (var element in listaRekordTabelaZysku)
             {
                 double wartoscProcentowa = Convert.ToDouble(Math.Round(100 * element.CenaAktualna * element.IloscAkcji / wartoscOtawrtychPozycji));
                 if (wartoscProcentowa < 2)
@@ -283,10 +292,8 @@ namespace MauiApp1
         /// <summary>
         /// tworzy wykres słupkowy dywidend poszczególnych akcji z podziałęm na miesiące
         /// </summary>
-        private void Ustawienie_Wykresu_Slupki_Miesiace()
+        private void Ustawienie_Wykresu_Slupki_Miesiace(List<OperacjeGotowkowe> listaOperacjiGotowkowych)
         {
-            if(Konto_uzytkownika == null)
-            { return; }
             //Tworzenie wykresu słupkowego z zestackowanymi dywidendami w podziale na miesiące, o zadanym roku(na początku tylko 2025)
             List<string> Miesiace = new List<string>()
                     {
@@ -295,7 +302,7 @@ namespace MauiApp1
 
 
             //Gdzie typ operacji to dywidenda lub podatek od dywidendy, grupujemy po miesiącu i symbolu i sumujemy kwoty
-            var dywidendyWMiesiacach = Konto_uzytkownika.ListaOperacjiGotowkowych
+            var dywidendyWMiesiacach = listaOperacjiGotowkowych
                 .Where(g => ((g.Type == TypOperacjiGotowkowej.Withholding_Tax || g.Type == TypOperacjiGotowkowej.DIVIDENT) && g.Date.Year == DateTime.Now.Year))
                 .GroupBy(g => new { Miesiac = g.Date.ToString("MMMM", new CultureInfo("pl-PL")), Symbol = g.Symbol })
                 .OrderBy(g => g.Key.Miesiac)
@@ -384,13 +391,10 @@ namespace MauiApp1
         /// <summary>
         /// Tworzy wykres słupkowy z dywidendami posortowanymi według roku
         /// </summary>
-        private void Ustawienie_Wykresu_Slupki_Lata()
+        private void Ustawienie_Wykresu_Slupki_Lata(List<OperacjeGotowkowe> listaOperacjiGotowkowych)
         {
-            if(Konto_uzytkownika == null)
-            { return; }
-
             //Gdzie typ operacji to dywidenda lub podatek od dywidendy, grupujemy po roku i sumujemy kwoty 
-            var dywidendyPoRoku = Konto_uzytkownika.ListaOperacjiGotowkowych
+            var dywidendyPoRoku = listaOperacjiGotowkowych
                 .Where(g => g.Type == TypOperacjiGotowkowej.DIVIDENT || g.Type == TypOperacjiGotowkowej.Withholding_Tax)
                 .GroupBy(g => g.Date.Year)
                 .OrderBy(g => g.Key)
@@ -442,11 +446,11 @@ namespace MauiApp1
         /// <summary>
         /// Tworzy wykres kołowy z dywidendami poszczególnych akcji
         /// </summary>
-        private void Ustawienie_Wykresu_Kolowego_dywidend()
+        private void Ustawienie_Wykresu_Kolowego_dywidend(List<Dywidendy> listaKwotDywidend)
         {
             if (Konto_uzytkownika != null)
             {
-                SeriesKolowyDywidendy = Konto_uzytkownika.ListaKwotDywidend.Select(g => new PieSeries<decimal>
+                SeriesKolowyDywidendy = listaKwotDywidend.Select(g => new PieSeries<decimal>
                 {
                     Name = g.Symbol,
                     Values = new decimal[] { g.Kwota }
