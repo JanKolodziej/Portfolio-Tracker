@@ -62,5 +62,6 @@ namespace MauiApp1.Test
             };
             Assert.Equal(9.220800702442883399813593720m, konto.Zarobek_Na_SP500());
         }
+       
     }
 }
