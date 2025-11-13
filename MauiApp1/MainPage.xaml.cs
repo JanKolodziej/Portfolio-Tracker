@@ -91,7 +91,7 @@ namespace MauiApp1
                             for(int i =1; i<(operacja.Date.Date- listaSp.Last().DateTime.Date).Days;i++)
                             {
                                 SP500Pozycja SP = SP500Pozycja.Znajdz_Najblizszy_Sp(listaSp.Last().DateTime.Date.AddDays(1));
-                                listaSp.Add(new DateTimePoint(SP.Data.Date,Math.Round( Convert.ToDouble(liczbaPozycjiNaSP * SP.KursDolara*SP.CenaSrednia),2)));
+                                listaSp.Add(new DateTimePoint(listaSp.Last().DateTime.Date.AddDays(1), Math.Round( Convert.ToDouble(liczbaPozycjiNaSP * SP.KursDolara*SP.CenaSrednia),2)));
 
                             }
                         }
@@ -173,20 +173,23 @@ namespace MauiApp1
             if (Konto_uzytkownika == null)
                 return;
 
-            WplatyLabel.Text = konto.Wplaty.ToString();
-            OdsetkiLabel.Text = konto.Odsetki.ToString();
+            WplatyLabel.Text = konto.Wplaty.ToString() +" zł";
+            OdsetkiLabel.Text = konto.Odsetki.ToString() + " zł"; ;
             ZyskLabel.Text = konto.ZyskNaZamknietychPozycjach.ToString();
             WynikKontaLabel.Text = konto.WynikKonta.ToString("0.00") + " %";
-            WynikSPLabel.Text = konto.Zarobek_Na_SP500().ToString("0.00") + " %";
+            WynikSPLabel.Text = "%"+ konto.Zarobek_Na_SP500().ToString("0.00") ;
             if (konto.WynikKonta > 0)
             {
-                WynikKontaLabel.TextColor = Colors.Green;
+                KomorkaWynik.Background=Colors.Green;
             }
             else
             {
-                WynikKontaLabel.TextColor = Colors.Red;
+                KomorkaWynik.Background = Colors.Red;
             }
-           
+            LabelOstatniaAktualizacja.Text= "Ostatnia aktualizacja: ";
+            LabelOstatniaAktualizacja.Text += SP500Pozycja.ListaSP500PozycjaDnia.Last().Data.Date.ToShortDateString();
+
+
            Ustawienie_Wykres_SP500(konto.ListaOperacjiGotowkowych);
             Ustawienie_Wykresu_Kolowego_Wartosci_Konta(konto.ListaRekordówTabeliZysku);
              Ustawienie_Wykresu_Kolowego_dywidend(konto.ListaKwotDywidend);

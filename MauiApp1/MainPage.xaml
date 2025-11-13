@@ -12,20 +12,186 @@
             Padding="30,0"
             Spacing="25">
             <Label x:Name="PodajPlikLabel" Text="Witaj Użytkowniku, potrzebuje żebyś podał mi plik, abym działał poprawnie" FontSize="Title" />
-           <Button x:Name="PrzyciskPlik"  Text=" Plik z excela" Clicked="WybierzPlik"/>
+            <Button x:Name="PrzyciskPlik"  Text=" Plik z excela" Clicked="WybierzPlik"/>
             
             <Picker x:Name ="PickerKonto"  Title="Picker" IsVisible="False" SelectedIndexChanged="PickerKonto_SelectedIndexChanged"/>
-            <HorizontalStackLayout
-                Padding="30,0"
-                   Spacing="25">
-                <Label x:Name="WplatyLabel" Text="Empty"/>
-                <Label x:Name="OdsetkiLabel" Text="Empty"/>
-                <Label x:Name="ZyskLabel" Text="Empty"/>
-                <Label x:Name="WynikKontaLabel" Text="Empty"/>
-                <Label x:Name="WynikSPLabel" Text="Empty"/>
-            </HorizontalStackLayout>
-            <lvc:CartesianChart x:Name="WykresKontoSP500" x:DataType="local:MainPage" WidthRequest="1000" HeightRequest="500" Series="{Binding SeriesSP500}"  YAxes="{Binding YAxesSP500}" XAxes="{Binding XAxesSP500}" />
+            <!-- Tabela z podstawowymi informacjami o koncie Wplaty, Odsetki, Wartosc-->
+            <HorizontalStackLayout>
+                <Grid Padding="20" ColumnSpacing="20">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <!--Wplaty na Konto-->
+                    <Border Grid.Column="0"
+                                Grid.Row="0"
+                                Background="DarkCyan"
+                            
+                                StrokeThickness="0"
+                                StrokeShape="RoundRectangle 20"
+                                Padding="20"
+                                Shadow="{Shadow Brush=Black, Opacity=0.3, Radius=10, Offset='0,4'}">
+                        <VerticalStackLayout VerticalOptions="Center" Spacing="10">
+                            <Label Text="Wpłaty Na Konto"
+                                FontSize="18"
+                                TextColor="White"
+                                FontAttributes="Bold" />
+                            <Label x:Name="WplatyLabel" Text="0 zł"
+                                FontSize="18"
+                                TextColor="White"
+                                FontAttributes="Bold" />
+                        </VerticalStackLayout>
+                    </Border>
+                    <!--Odsetki-->
+                    <Border Grid.Column="1"
+                        Grid.Row="0"
+                        Background="PaleVioletRed"
+                        StrokeThickness="0"
+                        StrokeShape="RoundRectangle 20"
+                        Padding="20"
+                        Shadow="{Shadow Brush=Black, Opacity=0.3, Radius=10, Offset='0,4'}">
+                        <VerticalStackLayout VerticalOptions="Center" Spacing="10">
+                            <Label Text="Suma Odsetek"
+                            FontSize="18"
+                            TextColor="White"
+                            FontAttributes="Bold" />
+                            
+                            <Label x:Name="OdsetkiLabel" Text="0 zł"
+                            FontSize="18"
+                            TextColor="White"
+                            FontAttributes="Bold" />
+                        </VerticalStackLayout>
+                    </Border>
+                    <!--Zrealizowany zysk Konta-->
+                    <Border Grid.Column="2"
+                        Grid.Row="0"
+                        Background="BlueViolet"
+                        StrokeThickness="0"
+                        StrokeShape="RoundRectangle 20"
+                        Padding="20"
+                        Shadow="{Shadow Brush=Black, Opacity=0.3, Radius=10, Offset='0,4'}">
+                        <VerticalStackLayout VerticalOptions="Center" Spacing="10">
+                            <Label Text="Zrealizowany Zysk"
+                                FontSize="18"
+                                TextColor="White"
+                                FontAttributes="Bold" />
+                            <Label x:Name="ZyskLabel" Text="0 zł"
+                                FontSize="18"
+                                TextColor="White"
+                                FontAttributes="Bold" />
+                        </VerticalStackLayout>
+                    </Border>
+                    <!--Wynik Konta-->
+                    <Border Grid.Column="3"
+                        Grid.Row="0"
+                        x:Name="KomorkaWynik"
+                        Background="Green"
+                        StrokeThickness="0"
+                        StrokeShape="RoundRectangle 20"
+                        Padding="20"
+                        Shadow="{Shadow Brush=Black, Opacity=0.3, Radius=10, Offset='0,4'}">
+                        <VerticalStackLayout VerticalOptions="Center" Spacing="10">
+                            <Label Text="Wynik Konta"
+                                FontSize="18"
+                                TextColor="White"
+                                FontAttributes="Bold" />
+                            <Label x:Name="WynikKontaLabel" Text="0 %"
+                                FontSize="18"
+                                TextColor="White"
+                                FontAttributes="Bold" />
+                        </VerticalStackLayout>
+                    </Border>
 
+                </Grid>
+                
+                
+            </HorizontalStackLayout>
+            <HorizontalStackLayout>
+                <!--Teoretyczny zarobek na SP i wykres -->
+                <Grid Padding="20" ColumnSpacing="20">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="300" />
+                        <!-- lewy panel -->
+                        <ColumnDefinition Width="Auto" />
+                        <!-- wykres -->
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="300"/>
+                        <RowDefinition Height="300"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- LEWY PANEL -->
+                    <Border Grid.Column="0"
+                            Grid.Row="0"
+                            Background="#1976D2"
+                            StrokeThickness="0"
+                            StrokeShape="RoundRectangle 20"
+                            Padding="20"
+                            Shadow="{Shadow Brush=Black, Opacity=0.3, Radius=10, Offset='0,4'}">    
+
+                        <VerticalStackLayout VerticalOptions="Center" Spacing="10">
+                            <HorizontalStackLayout>
+                                <Label Text="Teoretyczny zwrot"
+                                    FontSize="18"
+                                    TextColor="White"
+                                    FontAttributes="Bold" />
+                                <Label
+                                    Text="🛈"
+                                    HeightRequest="20"
+                                    VerticalTextAlignment="End"
+                                    WidthRequest="20"
+                                    TextColor="LightGrey"
+                                    BackgroundColor="Transparent"
+                                    Padding="0"
+                                    Margin="0"
+                                    HorizontalOptions="Center"
+                                    VerticalOptions="Center"
+                                    ToolTipProperties.Text="Teoretyczny zarobek na indeksie S&amp;P 500, gdybyś w momencie wpłaty na konto zakupił udziały w indeskie po kursie dolara z tego dnia " />
+                                       
+                                    
+                               
+                            </HorizontalStackLayout>
+                            
+
+                            <Label x:Name="WynikSPLabel"  Text="%0"
+                       FontSize="48"
+                       TextColor="White"
+                       FontAttributes="Bold"
+                       HorizontalOptions="Start" />
+
+                            <Label x:Name="LabelOstatniaAktualizacja" Text="Ostatnia aktualizacja:  "
+                       FontSize="14"
+                       TextColor="White" />
+
+                            <Button Text="Zakualizuj"
+                                    ToolTipProperties.Text="Funkcja zostanie dodana już wkrótce!"
+                                   
+                        CornerRadius="10"
+                        BackgroundColor="White"
+                        TextColor="#1976D2"></Button>
+                        </VerticalStackLayout>
+                    </Border>
+
+                    <!-- WYKRES -->
+                    <Border Grid.Column="1"
+                            Grid.Row="0"
+                            Grid.RowSpan="2"
+                Background="White"
+                StrokeThickness="0"
+                StrokeShape="RoundRectangle 20"
+                Padding="10"
+                Shadow="{Shadow Brush=Black, Opacity=0.1, Radius=8, Offset='0,3'}">
+
+                        <lvc:CartesianChart x:Name="WykresKontoSP500" x:DataType="local:MainPage" WidthRequest="950" HeightRequest="550"
+                                Series="{Binding SeriesSP500}"
+                                YAxes="{Binding YAxesSP500}"
+                                XAxes="{Binding XAxesSP500}"
+                                 />
+                    </Border>
+                </Grid>
+            </HorizontalStackLayout>
             <HorizontalStackLayout>
                 <lvc:PieChart x:Name="WykresKolowyDywidendy" x:DataType="local:MainPage" WidthRequest="500" HeightRequest="500" Series="{Binding SeriesKolowyDywidendy}">
                     <lvc:PieChart.Title>
