@@ -4,7 +4,7 @@
              x:Class="MauiApp1.InformacjeOKoncie">
 
     <!-- Tabela z podstawowymi informacjami o koncie Wplaty, Odsetki, Wartosc-->
-    <FlexLayout Wrap="Wrap" JustifyContent="SpaceBetween" AlignItems="Start" Margin="0">
+    <FlexLayout Wrap="Wrap" JustifyContent="Start" AlignItems="Start" Margin="0">
         <!-- Wpłaty -->
         <Border Style="{StaticResource CardBorderStyle}" Background="#062E38" WidthRequest="220">
             <VerticalStackLayout Spacing="6">
@@ -37,9 +37,6 @@
             <VerticalStackLayout Spacing="6">
                 <Label Text="Wynik konta" Style="{StaticResource CardTitle}"/>
                 <Label x:Name="WynikKontaLabel" Text="{Binding WynikKontaText}" Style="{StaticResource CardValueLarge}">
-                    <Label.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding RefreshCommand}"/>
-                    </Label.GestureRecognizers>
                 </Label>
                 <Label Text="Skumulowany" Style="{StaticResource CardValueSmall}"/>
             </VerticalStackLayout>

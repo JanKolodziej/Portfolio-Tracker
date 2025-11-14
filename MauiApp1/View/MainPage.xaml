@@ -5,6 +5,7 @@
              xmlns:local="clr-namespace:MauiApp1"
              xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.Maui;assembly=LiveChartsCore.SkiaSharpView.Maui"
              xmlns:bib="clr-namespace:Biblioteka_Klas;assembly=MauiApp1.BibliotekaKlas"
+             BackgroundColor="#212735" 
              x:DataType="local:MainPageViewModel">
 
     <ScrollView>
@@ -12,120 +13,30 @@
         <VerticalStackLayout
             Padding="30,0"
             Spacing="25">
-            <Label x:Name="PodajPlikLabel" Text="Witaj Użytkowniku, potrzebuje żebyś podał mi plik, abym działał poprawnie" FontSize="Title" />
+            <Label x:Name="PodajPlikLabel" Text="Witaj Użytkowniku, potrzebuje żebyś podał mi plik, abym działał poprawnie" Style="{StaticResource SectionTitle}" />
             <Button x:Name="PrzyciskPlik"  Text=" Plik z excela" Clicked="WybierzPlik"/>
             
             <Picker x:Name ="PickerKonto"  Title="Picker" IsVisible="False" SelectedIndexChanged="PickerKonto_SelectedIndexChanged"/>
 
             <local:InformacjeOKoncie x:Name="KafelkiKonta" />
+            
+            <local:WykresSP500 x:Name="WykresSP"/>
 
+            <FlexLayout Wrap="Wrap"  AlignItems="Start" Margin="0" >
+                <Border Style="{StaticResource CardBorderStyle}">
+                    <VerticalStackLayout>
+                        <Label Text="Rozkład dywidend" Style="{StaticResource CardTitle}"/>
+                        <lvc:PieChart Series="{Binding SeriesKolowyDywidendy}" WidthRequest="360" HeightRequest="360"/>
+                    </VerticalStackLayout>
+                </Border>
 
-            <HorizontalStackLayout>
-                <!--Teoretyczny zarobek na SP i wykres -->
-                <Grid Padding="20" ColumnSpacing="20">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="300" />
-                        <!-- lewy panel -->
-                        <ColumnDefinition Width="Auto" />
-                        <!-- wykres -->
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="300"/>
-                        <RowDefinition Height="300"/>
-                    </Grid.RowDefinitions>
-
-                    <!-- LEWY PANEL -->
-                    <Border Grid.Column="0"
-                            Grid.Row="0"
-                            Background="#1976D2"
-                            StrokeThickness="0"
-                            StrokeShape="RoundRectangle 20"
-                            Padding="20"
-                            Shadow="{Shadow Brush=Black, Opacity=0.3, Radius=10, Offset='0,4'}">    
-
-                        <VerticalStackLayout VerticalOptions="Center" Spacing="10">
-                            <HorizontalStackLayout>
-                                <Label Text="Teoretyczny zwrot"
-                                    FontSize="18"
-                                    TextColor="White"
-                                    FontAttributes="Bold" />
-                                <Label
-                                    Text="🛈"
-                                    HeightRequest="20"
-                                    VerticalTextAlignment="End"
-                                    WidthRequest="20"
-                                    TextColor="LightGrey"
-                                    BackgroundColor="Transparent"
-                                    Padding="0"
-                                    Margin="0"
-                                    HorizontalOptions="Center"
-                                    VerticalOptions="Center"
-                                    ToolTipProperties.Text="Teoretyczny zarobek na indeksie S&amp;P 500, gdybyś w momencie wpłaty na konto zakupił udziały w indeskie po kursie dolara z tego dnia " />
-                                       
-                                    
-                               
-                            </HorizontalStackLayout>
-                            
-
-                            <Label x:Name="WynikSPLabel"  Text="%0"
-                       FontSize="48"
-                       TextColor="White"
-                       FontAttributes="Bold"
-                       HorizontalOptions="Start" />
-
-                            <Label x:Name="LabelOstatniaAktualizacja" Text="Ostatnia aktualizacja:  "
-                       FontSize="14"
-                       TextColor="White" />
-
-                            <Button Text="Zakualizuj"
-                                    ToolTipProperties.Text="Funkcja zostanie dodana już wkrótce!"
-                                   
-                        CornerRadius="10"
-                        BackgroundColor="White"
-                        TextColor="#1976D2"></Button>
-                        </VerticalStackLayout>
-                    </Border>
-
-                    <!-- WYKRES -->
-                    <Border Grid.Column="1"
-                            Grid.Row="0"
-                            Grid.RowSpan="2"
-                Background="White"
-                StrokeThickness="0"
-                StrokeShape="RoundRectangle 20"
-                Padding="10"
-                Shadow="{Shadow Brush=Black, Opacity=0.1, Radius=8, Offset='0,3'}">
-
-                        <lvc:CartesianChart x:Name="WykresKontoSP500" x:DataType="local:MainPageViewModel" WidthRequest="950" HeightRequest="550"
-                                Series="{Binding SeriesSP500}"
-                                YAxes="{Binding YAxesSP500}"
-                                XAxes="{Binding XAxesSP500}"
-                                 />
-                    </Border>
-                </Grid>
-            </HorizontalStackLayout>
-            <HorizontalStackLayout>
-                <lvc:PieChart x:Name="WykresKolowyDywidendy" x:DataType="local:MainPageViewModel" WidthRequest="500" HeightRequest="500" Series="{Binding SeriesKolowyDywidendy}">
-                    <lvc:PieChart.Title>
-                        <lvc:XamlDrawnLabelVisual
-                             Text="Rozkład Dywidend według spółek"
-                             Paint="{lvc:SolidColorPaint Color='#000'}"
-                             TextSize="25"
-                             Padding="15"/> 
-                    </lvc:PieChart.Title>
-                </lvc:PieChart>
-
-                <lvc:PieChart x:Name="WykresKolowyOtwarte" x:DataType="local:MainPageViewModel" WidthRequest="500" HeightRequest="500" Series="{Binding SeriesKolowyOtwarte}">
-                    <lvc:PieChart.Title>
-                        <lvc:XamlDrawnLabelVisual
-                             Text="Procentowy Udział spółek w portfelu"
-                             Paint="{lvc:SolidColorPaint Color='#000'}"
-                             TextSize="25"
-                             Padding="15"/> 
-                    </lvc:PieChart.Title>
-                </lvc:PieChart>
-
-            </HorizontalStackLayout>
+                <Border Style="{StaticResource CardBorderStyle}">
+                    <VerticalStackLayout>
+                        <Label Text="Udział spółek w portfelu" Style="{StaticResource CardTitle}"/>
+                        <lvc:PieChart Series="{Binding SeriesKolowyOtwarte}" WidthRequest="360" HeightRequest="360"/>
+                    </VerticalStackLayout>
+                </Border>
+            </FlexLayout>
 
 
 

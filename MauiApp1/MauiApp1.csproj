@@ -119,27 +119,26 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="View\" />
 	  <Folder Include="Resources\Images\" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Compile Update="WykresSP500.xaml.cs">
+	  <Compile Update="View\WykresSP500.xaml.cs">
 	    <DependentUpon>WykresSP500.xaml</DependentUpon>
 	  </Compile>
-	  <Compile Update="Style.xaml.cs">
+	  <Compile Update="View\Style.xaml.cs">
 	    <DependentUpon>Style.xaml</DependentUpon>
 	  </Compile>
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiXaml Update="InformacjeOKoncie.xaml">
+	  <MauiXaml Update="View\InformacjeOKoncie.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="WykresSP500.xaml">
+	  <MauiXaml Update="View\WykresSP500.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Style.xaml">
+	  <MauiXaml Update="View\Style.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>

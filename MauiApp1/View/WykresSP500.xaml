@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MauiApp1.WykresSP500"
+             xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.Maui;assembly=LiveChartsCore.SkiaSharpView.Maui">
+
+    <!-- GŁÓWNA SEKCJA: lewy panel (SP500) + wykres (prawy) -->
+    <Grid ColumnDefinitions="320, *" RowDefinitions="Auto" ColumnSpacing="12">
+
+        <!-- LEWY PANEL: SP500 -->
+        <Border Grid.Column="0" Style="{StaticResource ElevatedCardBorderStyle}">
+            <VerticalStackLayout Spacing="10">
+                <HorizontalStackLayout  VerticalOptions="Center" Spacing="8">
+                    <Label Text="Teoretyczny zwrot S&amp;P500" Style="{StaticResource SectionTitle}" VerticalOptions="Center"/>
+                    <Label Text="🛈" FontSize="14" VerticalOptions="Center" TextColor="{StaticResource MutedText}" 
+                    ToolTipProperties.Text  =" Porównanie: co gdyby wpłaty inwestować w S&amp;P500 (wartość w dniu wpłaty)."/>
+                </HorizontalStackLayout>
+
+                <Label x:Name="WynikSPLabel"
+                   Text="{Binding WynikSPText}"
+                   Style="{StaticResource CardValueLarge}"
+                   TextColor="{Binding WynikSPColor, FallbackValue={StaticResource AccentGreen}}"/>
+
+                <Label x:Name="LabelOstatniaAktualizacja" Text="{Binding OstatniaAktualizacjaText}" Style="{StaticResource CardValueSmall}"/>
+
+                <Button Text="Aktualizuj dane" Command="{Binding AktualizujCommand}"
+                    BackgroundColor="{StaticResource AccentOrange}" TextColor="#1B0B00" CornerRadius="8" Padding="10"/>
+            </VerticalStackLayout>
+        </Border>
+
+        <!-- PRAWE: duży wykres -->
+        <Border Grid.Column="1" Style="{StaticResource ElevatedCardBorderStyle}">
+            <VerticalStackLayout>
+                <Label Text="Wykres konta z S&amp;P500" Style="{StaticResource CardTitle}" Margin="4"/>
+                <lvc:CartesianChart
+                Background="{StaticResource CardBgElevated}"
+                x:Name="WykresKontoSP500"
+                Series="{Binding SeriesSP500}"
+                XAxes="{Binding XAxesSP500}"
+                YAxes="{Binding YAxesSP500}"
+                HeightRequest="420"
+                Margin="0,6"/>
+            </VerticalStackLayout>
+        </Border>
+    </Grid>
+
+</ContentView>

@@ -47,9 +47,7 @@ namespace MauiApp1
         private void Ustaw_Wygląd_MainPage(Konto konto)
         {
             KafelkiKonta.Ustaw_Wyglag_Kafelki(konto);
-            WynikSPLabel.Text = "%" + konto.Zarobek_Na_SP500().ToString("0.00");
-            LabelOstatniaAktualizacja.Text = "Ostatnia aktualizacja: ";
-            LabelOstatniaAktualizacja.Text += SP500Pozycja.ListaSP500PozycjaDnia.Last().Data.Date.ToShortDateString();
+            WykresSP.Ustaw_Wyglad_SP500(konto);
 
 
             

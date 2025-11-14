@@ -17,10 +17,7 @@ namespace MauiApp1
     [Observable]
     public partial class MainPageViewModel 
     {
-        //Wykres Sp500
-        public IEnumerable<ISeries> SeriesSP500 { get; set; } = new ISeries[0];
-        public Axis[] XAxesSP500 { get; set; } = new Axis[0];
-        public Axis[] YAxesSP500 { get; set; } = new Axis[0];
+
         //Wykres kołowy
         public IEnumerable<ISeries> SeriesKolowyDywidendy { get; set; } = new ISeries[0];
         public IEnumerable<ISeries> SeriesKolowyOtwarte { get; set; } = new ISeries[0];
@@ -81,7 +78,6 @@ namespace MauiApp1
         {
             Stopwatch stopwatch = new Stopwatch();
             stopwatch.Start();
-            (SeriesSP500, XAxesSP500, YAxesSP500) = UstawienieWykresow.Ustawienie_Wykres_SP500(konto.ListaOperacjiGotowkowych);
             SeriesKolowyOtwarte = UstawienieWykresow.Ustawienie_Wykresu_Kolowego_Wartosci_Procentowych(konto.ListaRekordówTabeliZysku);
             SeriesKolowyDywidendy = UstawienieWykresow.Ustawienie_Wykresu_Kolowego_dywidend(konto.ListaKwotDywidend);
             (SeriesSlupkiMiesiace, XAxesSlupkiMiesiace, YAxesSlupkiMiesiace) = UstawienieWykresow.Ustawienie_Wykresu_Slupki_Miesiace(konto.ListaOperacjiGotowkowych);
