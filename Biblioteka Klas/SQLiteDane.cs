@@ -1,11 +1,6 @@
 ﻿
-using Microsoft.Data.Sqlite;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Dapper;
+using Microsoft.Data.Sqlite;
 using System.Diagnostics;
 
 
@@ -13,7 +8,7 @@ namespace Biblioteka_Klas
 {
     public class SQLiteDane
     {
-        
+
         // Ścieżka do pliku bazy danych SQLite 
         public static string sciezkaDoBazy = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Baza_SP500.db"); // 
 
@@ -34,12 +29,12 @@ namespace Biblioteka_Klas
 
 
                 // Wykonaj zapytanie za pomocą Dapper i mapuj na listę SP500Dolar
-                 var wyniki = await connection.QueryAsync<SP500Pozycja>("Select * From SP500Dolar");
+                var wyniki = await connection.QueryAsync<SP500Pozycja>("Select * From SP500Dolar");
                 return wyniki.AsList();
             }
 
-            
+
         }
-        
+
     }
 }

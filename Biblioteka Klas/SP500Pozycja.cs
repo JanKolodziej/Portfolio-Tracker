@@ -1,16 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Biblioteka_Klas
+﻿namespace Biblioteka_Klas
 {
     public class SP500Pozycja
     {
-        public decimal KursDolara {get; set; }
+        public decimal KursDolara { get; set; }
         public DateTime Data { get; set; }
         public decimal CenaSrednia { get; set; }
 
@@ -43,11 +35,11 @@ namespace Biblioteka_Klas
 
             }
             return SP500Pozycja.ListaSP500PozycjaDnia.Last();           //Jedyny przypadek dla któego poprzedni warunek nie zadziała to gdy wpłacimy "dzisiaj"
-                                                                            //A ostatni kurs Sp jest z "wczoraj", więc zwracamy ostatni isniejący kurs
+                                                                        //A ostatni kurs Sp jest z "wczoraj", więc zwracamy ostatni isniejący kurs
 
         }
 
     }
 
-    
+
 }

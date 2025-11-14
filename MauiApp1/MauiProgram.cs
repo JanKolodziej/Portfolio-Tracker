@@ -1,8 +1,6 @@
-﻿using Microsoft.Extensions.Logging;
-using LiveChartsCore;
-using LiveChartsCore.SkiaSharpView.Maui;
+﻿using LiveChartsCore.SkiaSharpView.Maui;
+using Microsoft.Extensions.Logging;
 using SkiaSharp.Views.Maui.Controls.Hosting;
-using SQLitePCL;
 
 namespace MauiApp1
 {
@@ -23,7 +21,7 @@ namespace MauiApp1
                 });
 
 #if DEBUG
-    		builder.Logging.AddDebug();
+            builder.Logging.AddDebug();
 #endif
 
             return builder.Build();

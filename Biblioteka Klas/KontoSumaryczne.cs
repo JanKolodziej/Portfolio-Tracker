@@ -1,64 +1,54 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Biblioteka_Klas
+﻿namespace Biblioteka_Klas
 {
     public class KontoSumaryczne : Konto
     {
 
         public KontoSumaryczne(List<OperacjeGotowkowe> listaoperacji, List<ZamknietaPozycja> zamkniete, List<OtwartaPozycja> otwarte)
-            :base(listaoperacji,zamkniete, otwarte,"Konto Sumaryczne")
+            : base(listaoperacji, zamkniete, otwarte, "Konto Sumaryczne")
         {
-            
-        }
-    
 
-        public static void Zsumuj_Wszystkie_Konta(List<OperacjeGotowkowe> operacjeGotowkowe,List<OtwartaPozycja> otwartaPozycja, List<ZamknietaPozycja> zamknietaPozycja)
+        }
+
+
+        public static void Zsumuj_Wszystkie_Konta(List<OperacjeGotowkowe> operacjeGotowkowe, List<OtwartaPozycja> otwartaPozycja, List<ZamknietaPozycja> zamknietaPozycja)
         {
             operacjeGotowkowe.Clear();
             otwartaPozycja.Clear();
             zamknietaPozycja.Clear();
-            foreach(Konto konto in ListaKont)
+            foreach (Konto konto in ListaKont)
             {
-                if(konto is not KontoSumaryczne)
+                if (konto is not KontoSumaryczne)
                 {
                     operacjeGotowkowe.AddRange(konto.ListaOperacjiGotowkowych);
                     zamknietaPozycja.AddRange(konto.ListaZamknietychPozycji);
                     otwartaPozycja.AddRange(konto.ListaOtwartychPozycji);
                 }
             }
-            
-        }
-        private void Przelicz_Dywidendy()
-        {
-             List<Dywidendy> posegregowaneDywidendy = new();
 
-            foreach (Dywidendy dywidendy in ListaKwotDywidend)
+        }
+        
+        public static void Tworzenie_Konta_Sumarycznego()
+        {
+            if (Konto.ListaKont.Count >= 2)
             {
-                if(posegregowaneDywidendy.Any(x => x.Symbol == dywidendy.Symbol)) //Sprawdzamy czy dany symbol znajduje się już na liście 
+
+                foreach (Konto k in Konto.ListaKont)
                 {
-                    //Jeżeli tak to go szukamy i dodajemy kwote do jego kwoty
-                    for (int i = 0; i < posegregowaneDywidendy.Count; i++)
+                    if (k is KontoSumaryczne)
                     {
-                        if (posegregowaneDywidendy[i].Symbol == dywidendy.Symbol)
-                        {
-                            posegregowaneDywidendy[i].Kwota += dywidendy.Kwota;
-                        }
+                        Konto.ListaKont.Remove(k);
+                        break;
                     }
                 }
-                else //Jeżeli nie to dodajemy nowy symbol do listy
-                {
-                    Dywidendy nowaDywidenda = new Dywidendy(dywidendy.Symbol, dywidendy.Kwota);
-                    posegregowaneDywidendy.Add(nowaDywidenda);
-                }
+                List<OperacjeGotowkowe> listaoperacji = new();
+                List<ZamknietaPozycja> zamkniete = new();
+                List<OtwartaPozycja> otwarte = new();
+                KontoSumaryczne.Zsumuj_Wszystkie_Konta(listaoperacji, otwarte, zamkniete);
+                KontoSumaryczne kontoSumaryczne = new KontoSumaryczne(listaoperacji, zamkniete, otwarte);
+
             }
-            ListaKwotDywidend = posegregowaneDywidendy;
 
         }
-
 
 
     }

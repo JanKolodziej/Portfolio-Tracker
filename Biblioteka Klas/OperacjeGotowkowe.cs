@@ -1,10 +1,4 @@
 ﻿using ClosedXML.Excel;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 
 namespace Biblioteka_Klas
@@ -76,7 +70,7 @@ namespace Biblioteka_Klas
 
                         OperacjeGotowkowe nowaoperacja = new(typ, row.Cell("D").GetValue<DateTime>(), row.Cell("G").GetValue<decimal>(), row.Cell("F").GetValue<string>());
                         ListaOperacjiGotowkowych.Add(nowaoperacja);
-                        
+
 
 
                     }
@@ -87,16 +81,16 @@ namespace Biblioteka_Klas
                             Flaga = true; //Zmiana flagi na true bo rozpoczęcie tabeli
                         }
                     }
-                    
+
 
                 }
-                
+
             }
 
             return ListaOperacjiGotowkowych;
 
         }
 
- 
+
     }
 }

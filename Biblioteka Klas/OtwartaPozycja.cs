@@ -1,10 +1,4 @@
-﻿
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ClosedXML.Excel;
+﻿using ClosedXML.Excel;
 
 namespace Biblioteka_Klas
 {
@@ -13,15 +7,15 @@ namespace Biblioteka_Klas
     /// </summary>
     public class OtwartaPozycja
     {
-        public string Symbol { get; set;}  //Np: XTB.PL
-        public decimal Volume { get; set;} //Ilość pozycji
-        public DateTime OpenTime { get; set;} //Data zawarcia pozycji
-        public decimal OpenPrice { get; set;}//Cena otwarcia 1 pozycji
-        public decimal MarketPrice { get; set;} //Aktualna Cena
-        public decimal PurchasePrice { get; set;} //Całkowita cena zakupu
-        public decimal Profit {  get; set;} // Zysk ale również strata
+        public string Symbol { get; set; }  //Np: XTB.PL
+        public decimal Volume { get; set; } //Ilość pozycji
+        public DateTime OpenTime { get; set; } //Data zawarcia pozycji
+        public decimal OpenPrice { get; set; }//Cena otwarcia 1 pozycji
+        public decimal MarketPrice { get; set; } //Aktualna Cena
+        public decimal PurchasePrice { get; set; } //Całkowita cena zakupu
+        public decimal Profit { get; set; } // Zysk ale również strata
 
-       
+
 
         /// <summary>
         /// 
@@ -33,11 +27,11 @@ namespace Biblioteka_Klas
         /// <param name="marketPrice"></param>
         /// <param name="purchasePrice"></param>
         /// <param name="profit"></param>
-        public OtwartaPozycja( string symbol,  decimal volume, DateTime openTime, decimal openPrice, decimal marketPrice, decimal purchasePrice, decimal profit)
+        public OtwartaPozycja(string symbol, decimal volume, DateTime openTime, decimal openPrice, decimal marketPrice, decimal purchasePrice, decimal profit)
         {
-            
+
             Symbol = symbol;
-            
+
             Volume = volume;
             OpenTime = openTime;
             OpenPrice = openPrice;
@@ -58,8 +52,8 @@ namespace Biblioteka_Klas
             List<OtwartaPozycja> ListaOtwartychPozycji = new();
             var workbook = new XLWorkbook(path);
             var worksheet = workbook.Worksheet(2);
-            bool Flaga=false; //Zmienna pomocnicza ustalana na false, zmienia się na tru po rozpoczęciu się tabeli
-            foreach(var row in worksheet.RowsUsed()) //Iterujemy po każdym rzędzie Pliku tworząc w każdym(w którym są dane), obiekt naszej klasy i dodając do listy
+            bool Flaga = false; //Zmienna pomocnicza ustalana na false, zmienia się na tru po rozpoczęciu się tabeli
+            foreach (var row in worksheet.RowsUsed()) //Iterujemy po każdym rzędzie Pliku tworząc w każdym(w którym są dane), obiekt naszej klasy i dodając do listy
             {
                 if (Flaga)
                 {
@@ -68,9 +62,9 @@ namespace Biblioteka_Klas
                         OtwartaPozycja nowapozycja = new(row.Cell("C").GetValue<string>(), row.Cell("E").GetValue<decimal>(), row.Cell("F").GetValue<DateTime>(),
                         row.Cell("G").GetValue<decimal>(), row.Cell("H").GetValue<decimal>(), row.Cell("I").GetValue<decimal>(), row.Cell("P").GetValue<decimal>());
                         ListaOtwartychPozycji.Add(nowapozycja);
-                        
-                        
-                        
+
+
+
                     }
                 }
                 else
@@ -82,10 +76,10 @@ namespace Biblioteka_Klas
                 }
             }
 
-            return ListaOtwartychPozycji; 
+            return ListaOtwartychPozycji;
         }
-       
-        
+
+
 
 
 

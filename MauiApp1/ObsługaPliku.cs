@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Biblioteka_Klas;
+﻿using Biblioteka_Klas;
 
 namespace MauiApp1
 {
@@ -15,8 +9,8 @@ namespace MauiApp1
     {
         public async Task<Konto?> Wczytaj_Plik()
         {
-        var customFileType = new FilePickerFileType(new Dictionary<DevicePlatform, IEnumerable<string>>
-            {       
+            var customFileType = new FilePickerFileType(new Dictionary<DevicePlatform, IEnumerable<string>>
+            {
                 { DevicePlatform.iOS, new[] { "com.microsoft.excel.xlsx", "org.openxmlformats.spreadsheetml.sheet" } },
                 { DevicePlatform.Android, new[] { "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "application/vnd.ms-excel" } },
                 { DevicePlatform.WinUI, new[] { ".xlsx", ".xls" } },
@@ -60,7 +54,7 @@ namespace MauiApp1
             var gotowkowe = OperacjeGotowkowe.Wczytaj_Dane_Z_Excela(sciezka);
 
             // Utwórz konto z danymi
-            Konto konto = new(gotowkowe, zamkniete,otwarte ,sciezka);
+            Konto konto = new(gotowkowe, zamkniete, otwarte, sciezka);
 
             return konto;
         }

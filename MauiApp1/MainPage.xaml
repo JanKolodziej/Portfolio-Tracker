@@ -184,7 +184,7 @@
                 Padding="10"
                 Shadow="{Shadow Brush=Black, Opacity=0.1, Radius=8, Offset='0,3'}">
 
-                        <lvc:CartesianChart x:Name="WykresKontoSP500" x:DataType="local:MainPage" WidthRequest="950" HeightRequest="550"
+                        <lvc:CartesianChart x:Name="WykresKontoSP500" x:DataType="local:MainPageViewModel" WidthRequest="950" HeightRequest="550"
                                 Series="{Binding SeriesSP500}"
                                 YAxes="{Binding YAxesSP500}"
                                 XAxes="{Binding XAxesSP500}"
@@ -193,7 +193,7 @@
                 </Grid>
             </HorizontalStackLayout>
             <HorizontalStackLayout>
-                <lvc:PieChart x:Name="WykresKolowyDywidendy" x:DataType="local:MainPage" WidthRequest="500" HeightRequest="500" Series="{Binding SeriesKolowyDywidendy}">
+                <lvc:PieChart x:Name="WykresKolowyDywidendy" x:DataType="local:MainPageViewModel" WidthRequest="500" HeightRequest="500" Series="{Binding SeriesKolowyDywidendy}">
                     <lvc:PieChart.Title>
                         <lvc:XamlDrawnLabelVisual
                              Text="Rozkład Dywidend według spółek"
@@ -203,7 +203,7 @@
                     </lvc:PieChart.Title>
                 </lvc:PieChart>
 
-                <lvc:PieChart x:Name="WykresKolowyOtwarte" x:DataType="local:MainPage" WidthRequest="500" HeightRequest="500" Series="{Binding SeriesKolowyOtwarte}">
+                <lvc:PieChart x:Name="WykresKolowyOtwarte" x:DataType="local:MainPageViewModel" WidthRequest="500" HeightRequest="500" Series="{Binding SeriesKolowyOtwarte}">
                     <lvc:PieChart.Title>
                         <lvc:XamlDrawnLabelVisual
                              Text="Procentowy Udział spółek w portfelu"
@@ -214,13 +214,13 @@
                 </lvc:PieChart>
 
             </HorizontalStackLayout>
-           
 
 
-            <lvc:CartesianChart x:Name="WykresDywidendSlupki" x:DataType="local:MainPage"  WidthRequest="500" HeightRequest="500"  XAxes="{Binding XAxesSlupek} " YAxes="{Binding YAxesSlupek}" Series="{Binding SeriesSlupki}" />
-            <lvc:CartesianChart x:Name="WykresDywidendSlupkiMiesiace" x:DataType="local:MainPage"  WidthRequest="1000" HeightRequest="500" Series="{Binding SeriesSlupkiMiesiace}" XAxes="{Binding XAxesSlupkiMiesiace}" YAxes="{Binding YAxesSlupkiMiesiace}" />
 
-            <CollectionView IsGrouped="True" x:DataType="local:MainPage" ItemsSource="{Binding ListaZysku}" >
+            <lvc:CartesianChart x:Name="WykresDywidendSlupki" x:DataType="local:MainPageViewModel"  WidthRequest="500" HeightRequest="500"  XAxes="{Binding XAxesSlupek} " YAxes="{Binding YAxesSlupek}" Series="{Binding SeriesSlupki}" />
+            <lvc:CartesianChart x:Name="WykresDywidendSlupkiMiesiace" x:DataType="local:MainPageViewModel"  WidthRequest="1000" HeightRequest="500" Series="{Binding SeriesSlupkiMiesiace}" XAxes="{Binding XAxesSlupkiMiesiace}" YAxes="{Binding YAxesSlupkiMiesiace}" />
+
+            <CollectionView IsGrouped="True" x:DataType="local:MainPageViewModel" ItemsSource="{Binding ListaZysku}" >
                 <CollectionView.Header>
                     <Grid ColumnDefinitions="*,*,*,*,*,*,*"
                           Padding="6"
@@ -332,13 +332,13 @@
                         
                         <!--Zysk i jego procent-->
                         <VerticalStackLayout Grid.Column="4">
-                            <Label x:Name="LabelZyskSuma" Text="{Binding ZyskSuma,StringFormat='{}{0:F2} zł' }" FontAttributes="Bold" x:DataType="local:MainPage"/>
-                            <Label x:Name="LabelZyskSumaProcent" x:DataType="local:MainPage" Text="{Binding ZyskSumaProcent,StringFormat='{0:+0.00;-0.00;0.00}%' }" FontAttributes="Bold" >
+                            <Label x:Name="LabelZyskSuma" Text="{Binding ZyskSuma,StringFormat='{}{0:F2} zł' }" FontAttributes="Bold" x:DataType="local:MainPageViewModel"/>
+                            <Label x:Name="LabelZyskSumaProcent" x:DataType="local:MainPageViewModel" Text="{Binding ZyskSumaProcent,StringFormat='{0:+0.00;-0.00;0.00}%' }" FontAttributes="Bold" >
                                 <Label.Triggers>
                                     <!--  Kolor zielony jeśli wartość większa od zera -->
                                     <DataTrigger TargetType="Label"
                                          Binding="{Binding WiekszyOdZeraSumaProcent}"
-                                         x:DataType="local:MainPage"
+                                         x:DataType="local:MainPageViewModel"
                                          Value="True">
                                         <Setter Property="TextColor" Value="Green" />
                                     </DataTrigger>
@@ -346,7 +346,7 @@
                                     <!--  Kolor czerwony jeśli wartość mniejsza od zera -->
                                     <DataTrigger TargetType="Label"
                                          Binding="{Binding MniejszyOdZeraSumaProcent}"
-                                         x:DataType="local:MainPage"
+                                         x:DataType="local:MainPageViewModel"
                                          Value="True">          
                                         <Setter Property="TextColor" Value="Red" />
                                     </DataTrigger>
@@ -355,18 +355,18 @@
                         </VerticalStackLayout>
                         
                         <!--Zrealizowany zysk-->
-                        <Label Text="{Binding LacznyZrealizowanyZyskSuma,StringFormat='{}{0:F2} zł' }" FontAttributes="Bold" Grid.Column="5" x:DataType="local:MainPage"/>
+                        <Label Text="{Binding LacznyZrealizowanyZyskSuma,StringFormat='{}{0:F2} zł' }" FontAttributes="Bold" Grid.Column="5" x:DataType="local:MainPageViewModel"/>
                         
                         <!--Całkowity zysk i jego procent-->
                         
                         <VerticalStackLayout Grid.Column="6">
-                            <Label Text="{Binding CalkowityZyskSuma,StringFormat='{}{0:F2} zł' }" FontAttributes="Bold" x:DataType="local:MainPage"/>
-                            <Label x:Name="LabelCalkowityZyskSumaProcent" Text="{Binding CalkowityZyskSumaProcent,StringFormat='{0:+0.00;-0.00;0.00}%' }" FontAttributes="Bold" x:DataType="local:MainPage" >
+                            <Label Text="{Binding CalkowityZyskSuma,StringFormat='{}{0:F2} zł' }" FontAttributes="Bold" x:DataType="local:MainPageViewModel"/>
+                            <Label x:Name="LabelCalkowityZyskSumaProcent" Text="{Binding CalkowityZyskSumaProcent,StringFormat='{0:+0.00;-0.00;0.00}%' }" FontAttributes="Bold" x:DataType="local:MainPageViewModel" >
                                 <Label.Triggers>
                                     <!--  Kolor zielony jeśli wartość większa od zera -->
                                     <DataTrigger TargetType="Label"
                                          Binding="{Binding WiekszyOdZeraCalkowitySumaProcent}" 
-                                         x:DataType="local:MainPage"
+                                         x:DataType="local:MainPageViewModel"
                                          Value="True">          
                                         <Setter Property="TextColor" Value="Green" />
                                     </DataTrigger>
@@ -374,7 +374,7 @@
                                     <!--  Kolor czerwony jeśli wartość mniejsza od zera -->
                                     <DataTrigger TargetType="Label"
                                          Binding="{Binding MniejszyOdZeraCalkowitySumaProcent}"
-                                         x:DataType="local:MainPage"
+                                         x:DataType="local:MainPageViewModel"
                                          Value="True">
                                         <Setter Property="TextColor" Value="Red" />
                                     </DataTrigger>

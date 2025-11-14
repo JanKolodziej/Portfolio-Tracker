@@ -1,19 +1,14 @@
-﻿
-using DocumentFormat.OpenXml.Drawing.Charts;
-using System.Diagnostics;
-
-
-namespace Biblioteka_Klas
+﻿namespace Biblioteka_Klas
 {
     /// <summary>
     /// Przechowuje kwoty dywidend z podziałem na symbole np XTB.PL , 50 zł
     /// </summary>
-     public class Dywidendy
+    public class Dywidendy
     {
-        
-        public string Symbol { get; set;}
-        public decimal Kwota { get; set;}
-        
+
+        public string Symbol { get; set; }
+        public decimal Kwota { get; set; }
+
 
         public Dywidendy(string symbol, decimal kwota)
         {
@@ -33,25 +28,25 @@ namespace Biblioteka_Klas
         public List<OperacjeGotowkowe> ListaOperacjiGotowkowych { get; set; } = new();
 
         public List<ZamknietaPozycja> ListaZamknietychPozycji { get; set; } = new();
-        public List<OtwartaPozycja> ListaOtwartychPozycji{ get; set; } = new();
-        public  List<Dywidendy> ListaKwotDywidend { get; set; } = new();
+        public List<OtwartaPozycja> ListaOtwartychPozycji { get; set; } = new();
+        public List<Dywidendy> ListaKwotDywidend { get; set; } = new();
 
         public List<RekordTabelaZysku> ListaRekordówTabeliZysku { get; set; } = new();
         public List<RekordTabelaZysku> ListaZamknietychPozycjiW_Tabeli { get; set; } = new();
-        
+
         //**********************************
 
         //Zyski na pozycjach
-        public decimal ZyskNaZamknietychPozycjach { get; set; } 
+        public decimal ZyskNaZamknietychPozycjach { get; set; }
         public decimal ZyskNaOtwartychPozycjach { get; set; } = new();
         public decimal ZyskNaOtwartychPozycjachProcent { get; set; } = new();
         public decimal WartoscKonta { get; set; } = 0;
         public decimal WynikKonta { get; set; } = 0; //Wynik konta w procentach
 
         public string Nazwa { get; set; } = "";
-        public Konto(List<OperacjeGotowkowe> listaoperacji, List<ZamknietaPozycja> zamkniete,List<OtwartaPozycja> otwarte, string nazwa)
+        public Konto(List<OperacjeGotowkowe> listaoperacji, List<ZamknietaPozycja> zamkniete, List<OtwartaPozycja> otwarte, string nazwa)
         {
-            Nazwa= nazwa;
+            Nazwa = nazwa;
             ListaOperacjiGotowkowych = listaoperacji;
             ListaZamknietychPozycji = zamkniete;
             ListaOtwartychPozycji = otwarte;
@@ -59,11 +54,11 @@ namespace Biblioteka_Klas
             Przelicz_Zysk_Na_Otwartych_Pozycjach();
             Przelicz_Zysk_Na_Zamknietych_Pozycjach();
             WartoscKonta = Wartosc_Konta();
-            WynikKonta=Wynik_Konta();
-            
+            WynikKonta = Wynik_Konta();
+
             Dodaj_Rekordy_Do_Tabeli_Zysku();
             Policz_Zyski_Tabela();
-            
+
             ListaKont.Add(this);
 
         }
@@ -103,7 +98,7 @@ namespace Biblioteka_Klas
             }
         }
 
-        
+
 
         /// <summary>
         /// Oblicza wartość konta na podstawie wzoru:
@@ -123,7 +118,7 @@ namespace Biblioteka_Klas
         /// <returns>Wynik konta w procentach</returns>
         public decimal Wynik_Konta()
         {
-            decimal wynikKonta = (WartoscKonta - Wplaty)/Wplaty * 100;
+            decimal wynikKonta = (WartoscKonta - Wplaty) / Wplaty * 100;
             return wynikKonta;
         }
 
@@ -147,7 +142,7 @@ namespace Biblioteka_Klas
                 }
 
             }
-            return (liczbaPozycjiNaSP * ostatniaCenaSP*ostatniKursDolara -Wplaty)/Wplaty*100;
+            return (liczbaPozycjiNaSP * ostatniaCenaSP * ostatniKursDolara - Wplaty) / Wplaty * 100;
         }
 
 
@@ -159,16 +154,16 @@ namespace Biblioteka_Klas
         {
             foreach (OtwartaPozycja pozycja in ListaOtwartychPozycji)
             {
-                if(!ListaRekordówTabeliZysku.Any(x => x.Symbol == pozycja.Symbol))//Jeżeli nie ma jeszcze rekordu z danym symbolem to dodajemy nowy
+                if (!ListaRekordówTabeliZysku.Any(x => x.Symbol == pozycja.Symbol))//Jeżeli nie ma jeszcze rekordu z danym symbolem to dodajemy nowy
                 {
-                    RekordTabelaZysku rekordTabeli = new(pozycja.Symbol,pozycja.Volume,pozycja.MarketPrice,pozycja.OpenPrice,pozycja.Profit,pozycja.PurchasePrice);
+                    RekordTabelaZysku rekordTabeli = new(pozycja.Symbol, pozycja.Volume, pozycja.MarketPrice, pozycja.OpenPrice, pozycja.Profit, pozycja.PurchasePrice);
                     ListaRekordówTabeliZysku.Add(rekordTabeli);
                 }
                 else//Jeżeli jest to aktualizujemy istniejący rekord
                 {
-                    foreach(RekordTabelaZysku rekord in ListaRekordówTabeliZysku)
+                    foreach (RekordTabelaZysku rekord in ListaRekordówTabeliZysku)
                     {
-                        if(rekord.Symbol== pozycja.Symbol)
+                        if (rekord.Symbol == pozycja.Symbol)
                         {
                             rekord.CenaZakupu += pozycja.PurchasePrice; //Sumujemy koszt zakupu
                             rekord.IloscAkcji += pozycja.Volume;
@@ -180,11 +175,11 @@ namespace Biblioteka_Klas
                 }
             }
 
-            foreach(ZamknietaPozycja zamknietaPozycja in ListaZamknietychPozycji)
+            foreach (ZamknietaPozycja zamknietaPozycja in ListaZamknietychPozycji)
             {
-                if(!ListaRekordówTabeliZysku.Any(x => x.Symbol == zamknietaPozycja.Symbol))
+                if (!ListaRekordówTabeliZysku.Any(x => x.Symbol == zamknietaPozycja.Symbol))
                 {
-                    if(!ListaZamknietychPozycjiW_Tabeli.Any(x => x.Symbol == zamknietaPozycja.Symbol))
+                    if (!ListaZamknietychPozycjiW_Tabeli.Any(x => x.Symbol == zamknietaPozycja.Symbol))
                     {
                         RekordTabelaZysku rekord = new(zamknietaPozycja.Symbol, 0, 0, 0, 0, 0, 0, 0, 0, zamknietaPozycja.Profit);
                         rekord.KosztZamknietychPozycji = zamknietaPozycja.TotalPurchasePrice;
@@ -192,23 +187,23 @@ namespace Biblioteka_Klas
                     }
                     else
                     {
-                        foreach(RekordTabelaZysku rekordTabela in ListaZamknietychPozycjiW_Tabeli)
+                        foreach (RekordTabelaZysku rekordTabela in ListaZamknietychPozycjiW_Tabeli)
                         {
-                            if(rekordTabela.Symbol == zamknietaPozycja.Symbol)
+                            if (rekordTabela.Symbol == zamknietaPozycja.Symbol)
                             {
                                 rekordTabela.ZrealizowanyZysk += zamknietaPozycja.Profit;
                                 rekordTabela.KosztZamknietychPozycji += zamknietaPozycja.TotalPurchasePrice;
                             }
                         }
                     }
-                    
+
 
                 }
                 else
                 {
-                    foreach(RekordTabelaZysku rekordTabela in ListaRekordówTabeliZysku)
+                    foreach (RekordTabelaZysku rekordTabela in ListaRekordówTabeliZysku)
                     {
-                        if(rekordTabela.Symbol == zamknietaPozycja.Symbol)
+                        if (rekordTabela.Symbol == zamknietaPozycja.Symbol)
                         {
                             rekordTabela.ZrealizowanyZysk += zamknietaPozycja.Profit;
                             rekordTabela.KosztZamknietychPozycji += zamknietaPozycja.TotalPurchasePrice;
@@ -216,9 +211,9 @@ namespace Biblioteka_Klas
                     }
                 }
             }
-            foreach(Dywidendy dywidendy in ListaKwotDywidend)
+            foreach (Dywidendy dywidendy in ListaKwotDywidend)
             {
-                
+
                 if (ListaRekordówTabeliZysku.Any(x => x.Symbol == dywidendy.Symbol))
                 {
                     foreach (RekordTabelaZysku rekordTabela in ListaRekordówTabeliZysku)
@@ -229,7 +224,7 @@ namespace Biblioteka_Klas
                         }
                     }
                 }
-                else if(ListaZamknietychPozycjiW_Tabeli.Any(x => x.Symbol == dywidendy.Symbol))
+                else if (ListaZamknietychPozycjiW_Tabeli.Any(x => x.Symbol == dywidendy.Symbol))
                 {
                     foreach (RekordTabelaZysku rekordTabela in ListaZamknietychPozycjiW_Tabeli)
                     {
@@ -240,22 +235,22 @@ namespace Biblioteka_Klas
                     }
 
                 }
-                
+
             }
         }
 
         protected void Policz_Zyski_Tabela()
         {
-            foreach(RekordTabelaZysku rekord in ListaRekordówTabeliZysku)
+            foreach (RekordTabelaZysku rekord in ListaRekordówTabeliZysku)
             {
-               
-                
-             rekord.CenaOtwarcia = rekord.CenaZakupu / rekord.IloscAkcji;
-             rekord.CalkowityZysk = rekord.Zysk + rekord.Dywidendy + rekord.ZrealizowanyZysk;
-             rekord.ZyskProcent = rekord.Zysk / rekord.CenaZakupu * 100;
-             rekord.CalkowityZyskProcent = rekord.CalkowityZysk / (rekord.CenaZakupu + rekord.KosztZamknietychPozycji) * 100;
+
+
+                rekord.CenaOtwarcia = rekord.CenaZakupu / rekord.IloscAkcji;
+                rekord.CalkowityZysk = rekord.Zysk + rekord.Dywidendy + rekord.ZrealizowanyZysk;
+                rekord.ZyskProcent = rekord.Zysk / rekord.CenaZakupu * 100;
+                rekord.CalkowityZyskProcent = rekord.CalkowityZysk / (rekord.CenaZakupu + rekord.KosztZamknietychPozycji) * 100;
             }
-            foreach(RekordTabelaZysku rekord in ListaZamknietychPozycjiW_Tabeli)
+            foreach (RekordTabelaZysku rekord in ListaZamknietychPozycjiW_Tabeli)
             {
                 rekord.CalkowityZysk = rekord.ZrealizowanyZysk + rekord.Dywidendy;
                 rekord.CalkowityZyskProcent = rekord.CalkowityZysk / rekord.KosztZamknietychPozycji * 100;

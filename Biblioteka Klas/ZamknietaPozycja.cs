@@ -1,9 +1,4 @@
 ﻿using ClosedXML.Excel;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Biblioteka_Klas
 {
@@ -21,7 +16,7 @@ namespace Biblioteka_Klas
         public decimal TotalSalePrice { get; set; } //Całkowita cena sprzedaży
         public decimal Profit { get; set; } // Zysk ale również strata
 
-       
+
 
 
         public ZamknietaPozycja(string symbol, decimal volume, DateTime openTime, DateTime closeTime, decimal openPrice, decimal closePrice, decimal totalPurchasePrice, decimal totalSalePrice, decimal profit)
@@ -35,7 +30,7 @@ namespace Biblioteka_Klas
             TotalPurchasePrice = totalPurchasePrice;
             TotalSalePrice = totalSalePrice;
             Profit = profit;
-           
+
 
         }
 
@@ -51,7 +46,7 @@ namespace Biblioteka_Klas
         {
             List<ZamknietaPozycja> ListaZamknietychPozycji = new();
             var workbook = new XLWorkbook(path);
-           
+
             var worksheet = workbook.Worksheet(1);
             bool Flaga = false; //Zmienna pomocnicza ustalana na false, zmienia się na tru po rozpoczęciu się tabeli
             foreach (var row in worksheet.RowsUsed()) //Iterujemy po każdym rzędzie Pliku tworząc w każdym(w którym są dane), obiekt naszej klasy i dodając do listy
@@ -75,7 +70,7 @@ namespace Biblioteka_Klas
                         Flaga = true; //Zmiana flagi na true bo rozpoczęcie tabeli
                     }
                 }
-                
+
             }
             return ListaZamknietychPozycji;
         }

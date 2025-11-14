@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Biblioteka_Klas
+﻿namespace Biblioteka_Klas
 {
     /// <summary>
     /// Klasa reprezentująca rekord w tabeli zysku.
@@ -23,7 +17,7 @@ namespace Biblioteka_Klas
         public decimal Zysk { get; set; }
         public decimal ZyskProcent { get; set; }
         // Właściwość sprawdzająca, czy ZyskProcent jest większy od zera, wartośc pomocnicza do kolorowania tekstu w UI
-        public bool WiekszyOdZeraProcent => ZyskProcent > 0; 
+        public bool WiekszyOdZeraProcent => ZyskProcent > 0;
         public bool MniejszyOdZeraProcent => ZyskProcent < 0;
         //****************************************************************************
 
@@ -35,7 +29,7 @@ namespace Biblioteka_Klas
         public bool MniejszyOdZeraCalkowityProcent => CalkowityZyskProcent < 0;
         //****************************************************************************
 
-        public RekordTabelaZysku(string symbol, decimal iloscAkcji, decimal cenaAktualna, decimal cenaOtwarcia, decimal zysk,decimal cenakupna, decimal zyskProcent=0, decimal dywidendy=0, decimal calkowityZysk=0, decimal zrealizowanyZysk=0)
+        public RekordTabelaZysku(string symbol, decimal iloscAkcji, decimal cenaAktualna, decimal cenaOtwarcia, decimal zysk, decimal cenakupna, decimal zyskProcent = 0, decimal dywidendy = 0, decimal calkowityZysk = 0, decimal zrealizowanyZysk = 0)
         {
             Symbol = symbol;
             IloscAkcji = iloscAkcji;
