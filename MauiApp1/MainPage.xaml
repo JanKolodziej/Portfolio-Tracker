@@ -4,10 +4,11 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:MauiApp1"
              xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.Maui;assembly=LiveChartsCore.SkiaSharpView.Maui"
-             xmlns:bib="clr-namespace:Biblioteka_Klas;assembly=MauiApp1.BibliotekaKlas">
-    
-             
+             xmlns:bib="clr-namespace:Biblioteka_Klas;assembly=MauiApp1.BibliotekaKlas"
+             x:DataType="local:MainPageViewModel">
+
     <ScrollView>
+        
         <VerticalStackLayout
             Padding="30,0"
             Spacing="25">
@@ -15,99 +16,10 @@
             <Button x:Name="PrzyciskPlik"  Text=" Plik z excela" Clicked="WybierzPlik"/>
             
             <Picker x:Name ="PickerKonto"  Title="Picker" IsVisible="False" SelectedIndexChanged="PickerKonto_SelectedIndexChanged"/>
-            <!-- Tabela z podstawowymi informacjami o koncie Wplaty, Odsetki, Wartosc-->
-            <HorizontalStackLayout>
-                <Grid Padding="20" ColumnSpacing="20">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <!--Wplaty na Konto-->
-                    <Border Grid.Column="0"
-                                Grid.Row="0"
-                                Background="DarkCyan"
-                            
-                                StrokeThickness="0"
-                                StrokeShape="RoundRectangle 20"
-                                Padding="20"
-                                Shadow="{Shadow Brush=Black, Opacity=0.3, Radius=10, Offset='0,4'}">
-                        <VerticalStackLayout VerticalOptions="Center" Spacing="10">
-                            <Label Text="Wpłaty Na Konto"
-                                FontSize="18"
-                                TextColor="White"
-                                FontAttributes="Bold" />
-                            <Label x:Name="WplatyLabel" Text="0 zł"
-                                FontSize="18"
-                                TextColor="White"
-                                FontAttributes="Bold" />
-                        </VerticalStackLayout>
-                    </Border>
-                    <!--Odsetki-->
-                    <Border Grid.Column="1"
-                        Grid.Row="0"
-                        Background="PaleVioletRed"
-                        StrokeThickness="0"
-                        StrokeShape="RoundRectangle 20"
-                        Padding="20"
-                        Shadow="{Shadow Brush=Black, Opacity=0.3, Radius=10, Offset='0,4'}">
-                        <VerticalStackLayout VerticalOptions="Center" Spacing="10">
-                            <Label Text="Suma Odsetek"
-                            FontSize="18"
-                            TextColor="White"
-                            FontAttributes="Bold" />
-                            
-                            <Label x:Name="OdsetkiLabel" Text="0 zł"
-                            FontSize="18"
-                            TextColor="White"
-                            FontAttributes="Bold" />
-                        </VerticalStackLayout>
-                    </Border>
-                    <!--Zrealizowany zysk Konta-->
-                    <Border Grid.Column="2"
-                        Grid.Row="0"
-                        Background="BlueViolet"
-                        StrokeThickness="0"
-                        StrokeShape="RoundRectangle 20"
-                        Padding="20"
-                        Shadow="{Shadow Brush=Black, Opacity=0.3, Radius=10, Offset='0,4'}">
-                        <VerticalStackLayout VerticalOptions="Center" Spacing="10">
-                            <Label Text="Zrealizowany Zysk"
-                                FontSize="18"
-                                TextColor="White"
-                                FontAttributes="Bold" />
-                            <Label x:Name="ZyskLabel" Text="0 zł"
-                                FontSize="18"
-                                TextColor="White"
-                                FontAttributes="Bold" />
-                        </VerticalStackLayout>
-                    </Border>
-                    <!--Wynik Konta-->
-                    <Border Grid.Column="3"
-                        Grid.Row="0"
-                        x:Name="KomorkaWynik"
-                        Background="Green"
-                        StrokeThickness="0"
-                        StrokeShape="RoundRectangle 20"
-                        Padding="20"
-                        Shadow="{Shadow Brush=Black, Opacity=0.3, Radius=10, Offset='0,4'}">
-                        <VerticalStackLayout VerticalOptions="Center" Spacing="10">
-                            <Label Text="Wynik Konta"
-                                FontSize="18"
-                                TextColor="White"
-                                FontAttributes="Bold" />
-                            <Label x:Name="WynikKontaLabel" Text="0 %"
-                                FontSize="18"
-                                TextColor="White"
-                                FontAttributes="Bold" />
-                        </VerticalStackLayout>
-                    </Border>
 
-                </Grid>
-                
-                
-            </HorizontalStackLayout>
+            <local:InformacjeOKoncie x:Name="KafelkiKonta" />
+
+
             <HorizontalStackLayout>
                 <!--Teoretyczny zarobek na SP i wykres -->
                 <Grid Padding="20" ColumnSpacing="20">

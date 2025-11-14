@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MauiApp1.InformacjeOKoncie">
+
+    <!-- Tabela z podstawowymi informacjami o koncie Wplaty, Odsetki, Wartosc-->
+    <FlexLayout Wrap="Wrap" JustifyContent="SpaceBetween" AlignItems="Start" Margin="0">
+        <!-- Wpłaty -->
+        <Border Style="{StaticResource CardBorderStyle}" Background="#062E38" WidthRequest="220">
+            <VerticalStackLayout Spacing="6">
+                <Label Text="Wpłaty na konto" Style="{StaticResource CardTitle}"/>
+                <Label x:Name="WplatyLabel" Text="{Binding WplatyText}" Style="{StaticResource CardValueLarge}"/>
+                <Label Text="Różnica Wpłat i Wypłat" Style="{StaticResource CardValueSmall}"/>
+            </VerticalStackLayout>
+        </Border>
+
+        <!-- Odsetki -->
+        <Border Style="{StaticResource CardBorderStyle}" Background="#3B1E2F" WidthRequest="220">
+            <VerticalStackLayout Spacing="6">
+                <Label Text="Suma odsetek" Style="{StaticResource CardTitle}"/>
+                <Label x:Name="OdsetkiLabel" Text="{Binding OdsetkiText}" Style="{StaticResource CardValueLarge}"/>
+                <Label Text="Od wolnych środków" Style="{StaticResource CardValueSmall}"/>
+            </VerticalStackLayout>
+        </Border>
+
+        <!-- Zrealizowany zysk -->
+        <Border Style="{StaticResource CardBorderStyle}" Background="#2D1E47" WidthRequest="220">
+            <VerticalStackLayout Spacing="6">
+                <Label Text="Zrealizowany zysk" Style="{StaticResource CardTitle}"/>
+                <Label x:Name="ZyskLabel" Text="{Binding ZyskText}" Style="{StaticResource CardValueLarge}"/>
+                <Label Text="Sprzedane pozycje" Style="{StaticResource CardValueSmall}"/>
+            </VerticalStackLayout>
+        </Border>
+
+        <!-- Wynik -->
+        <Border Style="{StaticResource CardBorderStyle}" Background="#073923" WidthRequest="220">
+            <VerticalStackLayout Spacing="6">
+                <Label Text="Wynik konta" Style="{StaticResource CardTitle}"/>
+                <Label x:Name="WynikKontaLabel" Text="{Binding WynikKontaText}" Style="{StaticResource CardValueLarge}">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding RefreshCommand}"/>
+                    </Label.GestureRecognizers>
+                </Label>
+                <Label Text="Skumulowany" Style="{StaticResource CardValueSmall}"/>
+            </VerticalStackLayout>
+        </Border>
+    </FlexLayout>
+
+</ContentView>

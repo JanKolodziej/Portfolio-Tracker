@@ -46,22 +46,8 @@ namespace MauiApp1
         /// <param name="konto"></param>
         private void Ustaw_Wygląd_MainPage(Konto konto)
         {
-            Stopwatch stopwatch = new Stopwatch();
-            stopwatch.Start();
-
-            WplatyLabel.Text = konto.Wplaty.ToString() + " zł";
-            OdsetkiLabel.Text = konto.Odsetki.ToString() + " zł"; ;
-            ZyskLabel.Text = konto.ZyskNaZamknietychPozycjach.ToString();
-            WynikKontaLabel.Text = konto.WynikKonta.ToString("0.00") + " %";
+            KafelkiKonta.Ustaw_Wyglag_Kafelki(konto);
             WynikSPLabel.Text = "%" + konto.Zarobek_Na_SP500().ToString("0.00");
-            if (konto.WynikKonta > 0)
-            {
-                KomorkaWynik.Background = Colors.Green;
-            }
-            else
-            {
-                KomorkaWynik.Background = Colors.Red;
-            }
             LabelOstatniaAktualizacja.Text = "Ostatnia aktualizacja: ";
             LabelOstatniaAktualizacja.Text += SP500Pozycja.ListaSP500PozycjaDnia.Last().Data.Date.ToShortDateString();
 
@@ -86,8 +72,6 @@ namespace MauiApp1
                 }
 
             }
-            stopwatch.Stop();
-            Debug.WriteLine($"Czas tworzenia konta : {stopwatch.ElapsedMilliseconds} ms");
         }
 
         /// <summary>

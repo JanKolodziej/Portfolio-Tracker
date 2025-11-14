@@ -2,6 +2,7 @@
 using LiveChartsCore;
 using LiveChartsCore.Defaults;
 using LiveChartsCore.SkiaSharpView;
+using System.Diagnostics;
 using System.Globalization;
 
 namespace MauiApp1
@@ -85,6 +86,7 @@ namespace MauiApp1
                     MinLimit = 0,
                 }
             };
+
             return (seriesP500, XAxes, YAxes);
 
 
