@@ -123,6 +123,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Update="View\TabelaZysku.xaml.cs">
+	    <DependentUpon>TabelaZysku.xaml</DependentUpon>
+	  </Compile>
 	  <Compile Update="View\WykresSP500.xaml.cs">
 	    <DependentUpon>WykresSP500.xaml</DependentUpon>
 	  </Compile>
@@ -133,6 +136,9 @@
 
 	<ItemGroup>
 	  <MauiXaml Update="View\InformacjeOKoncie.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="View\TabelaZysku.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="View\WykresSP500.xaml">

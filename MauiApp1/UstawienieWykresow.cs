@@ -2,6 +2,8 @@
 using LiveChartsCore;
 using LiveChartsCore.Defaults;
 using LiveChartsCore.SkiaSharpView;
+using LiveChartsCore.SkiaSharpView.Painting;
+using SkiaSharp;
 using System.Diagnostics;
 using System.Globalization;
 
@@ -73,7 +75,9 @@ namespace MauiApp1
             {
                 new DateTimeAxis(TimeSpan.FromDays(30),dt => dt.ToString("MM.yyyy"))
                 {
-                    MinLimit = listaSp.First().DateTime.Ticks
+                    MinLimit = listaSp.First().DateTime.Ticks,
+                    LabelsPaint = new SolidColorPaint(SKColors.Gray),
+                    
                 }
             };
 
@@ -84,6 +88,9 @@ namespace MauiApp1
                 {
                     Name = "Wartość [PLN]",
                     MinLimit = 0,
+                    LabelsPaint = new SolidColorPaint(SKColors.Gray),
+                    NamePaint = new SolidColorPaint(SKColors.Gray)
+
                 }
             };
 
@@ -218,10 +225,11 @@ namespace MauiApp1
                         new Axis
                         {
                             Labels = Miesiace,
-                            Name = "Miesiace",
                             UnitWidth = 1,
                             MinStep = 1,
-                            ForceStepToMin = true
+                            ForceStepToMin = true,
+                            LabelsPaint = new SolidColorPaint(SKColors.Gray)
+
                         }
             };
             // oś Y — kwoty
@@ -231,6 +239,10 @@ namespace MauiApp1
                         {
                             Name = "Kwota [PLN]",
                             MinLimit = 0,
+                            LabelsPaint = new SolidColorPaint(SKColors.Gray),
+                            NamePaint = new SolidColorPaint(SKColors.Gray)
+
+
                         }
             };
             return (seriesList, xaxesSlupkiMiesiace,yaxesSlupkiMiesiace);
@@ -271,7 +283,10 @@ namespace MauiApp1
                     Name = "Rok",
                     UnitWidth = 1,
                     MinStep = 1,
-                    ForceStepToMin = true
+                    ForceStepToMin = true,
+                    LabelsPaint = new SolidColorPaint(SKColors.Gray),
+                    NamePaint = new SolidColorPaint(SKColors.Gray)
+
                 }
             };
             // oś Y — kwoty
@@ -281,6 +296,9 @@ namespace MauiApp1
                 {
                     Name = "Kwota [PLN]",
                     MinLimit = 0,
+                    LabelsPaint = new SolidColorPaint(SKColors.Gray),
+                    NamePaint = new SolidColorPaint(SKColors.Gray)
+
                 }
             };
             return (seriesSlupki, xAxesSlupek, yAxesSlupek);

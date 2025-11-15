@@ -2,7 +2,9 @@
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MauiApp1.WykresSP500"
-             xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.Maui;assembly=LiveChartsCore.SkiaSharpView.Maui">
+             xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.Maui;assembly=LiveChartsCore.SkiaSharpView.Maui"
+             xmlns:local="clr-namespace:MauiApp1"
+             x:DataType="local:WykresSP500ViewModel">
 
     <!-- GŁÓWNA SEKCJA: lewy panel (SP500) + wykres (prawy) -->
     <Grid ColumnDefinitions="320, *" RowDefinitions="Auto" ColumnSpacing="12">

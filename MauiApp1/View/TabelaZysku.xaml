@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:MauiApp1"
+             xmlns:bib="clr-namespace:Biblioteka_Klas;assembly=MauiApp1.BibliotekaKlas"
+             x:Class="MauiApp1.TabelaZysku"
+             x:DataType="local:TabelaZyskuViewModel">
+
+    <CollectionView 
+        IsGrouped="True" 
+        ItemsSource="{Binding ListaZysku}"
+        BackgroundColor="{StaticResource CardBgElevated}">
+        <CollectionView.Header>
+            <Grid ColumnDefinitions="*,*,*,*,*,*,*"
+                          Padding="10"
+                          BackgroundColor="{StaticResource CardBgElevated}"
+                          HeightRequest="35" >
+
+                <Label Text="Symbol" Style="{StaticResource CardTitle} "/>
+                <Label Text="Ilość Akcji" Grid.Column="1" Style="{StaticResource CardTitle}"/>
+                <Label Text="Cena Aktualna" Grid.Column="2" Style="{StaticResource CardTitle}" />
+                <Label Text="Cena Otwarcia" Grid.Column="3" Style="{StaticResource CardTitle}" />
+                <Label Text="Zysk" Grid.Column="4" Style="{StaticResource CardTitle}"/>
+                <Label Text="Zrealizowany Zysk" Grid.Column="5" Style="{StaticResource CardTitle}"/>
+                <Label Text="Całkowity Zysk" Grid.Column="6" Style="{StaticResource CardTitle}"/>
+
+            </Grid>
+        </CollectionView.Header>
+        <CollectionView.GroupHeaderTemplate>
+            <DataTemplate>
+                <Grid BackgroundColor="{StaticResource CardBgElevated}" Padding="8" Margin="2">
+                    <Label Text="{Binding NazwaGrupy}" x:DataType="bib:TabelaGrupa"
+                       FontAttributes="Bold"
+                       FontSize="18"
+                       Style="{StaticResource CardTitle}"/>
+                </Grid>
+            </DataTemplate>
+        </CollectionView.GroupHeaderTemplate>
+
+        <CollectionView.ItemTemplate >
+            <DataTemplate x:DataType="bib:RekordTabelaZysku">
+                <Grid
+                              Padding="10"
+                              HeightRequest="60"
+                            ColumnDefinitions="*,*,*,*,*,*,*">
+
+                    <Label Text="{Binding Symbol}" Grid.Column="0" TextColor="#E6EEF5"/>
+                    <Label Text="{Binding IloscAkcji}" Grid.Column="1" TextColor="#E6EEF5"/>
+                    <Label Text="{Binding CenaAktualna}" Grid.Column="2" TextColor="#E6EEF5"/>
+                    <Label Text="{Binding CenaOtwarcia,StringFormat='{}{0:F2} zł' }" Grid.Column="3" TextColor="#E6EEF5"/>
+                    <VerticalStackLayout Grid.Column="4">
+                        <Label Text="{Binding Zysk,StringFormat='{}{0:F2} zł' }"  TextColor="#E6EEF5"/>
+                        <Label x:Name="LabelZyskProcentowy" Text="{Binding ZyskProcent,StringFormat='{0:+0.00;-0.00;0.00}%' }" >
+
+                            <Label.Triggers>
+                                <!--  Kolor zielony jeśli wartość większa od zera -->
+                                <DataTrigger TargetType="Label"
+                                             Binding="{Binding WiekszyOdZeraProcent}"
+                                             Value="True">
+                                    <Setter Property="TextColor" Value="Green" />
+                                </DataTrigger>
+
+                                <!--  Kolor czerwony jeśli wartość mniejsza od zera -->
+                                <DataTrigger TargetType="Label"
+                                             Binding="{Binding MniejszyOdZeraProcent}"
+                                             Value="True">
+                                    <Setter Property="TextColor" Value="Red" />
+                                </DataTrigger>
+                            </Label.Triggers>
+                        </Label>
+
+                    </VerticalStackLayout>
+
+                    <Label Text="{Binding ZrealizowanyZysk,StringFormat='{}{0:F2} zł'  }" Grid.Column="5" TextColor="#E6EEF5"/>
+                    <VerticalStackLayout Grid.Column="6">
+                        <Label Text="{Binding CalkowityZysk,StringFormat='{}{0:F2} zł' }" TextColor="#E6EEF5"/>
+                        <Label x:Name="LabelCalkowityZyskProcent" Text="{Binding CalkowityZyskProcent,StringFormat='{0:+0.00;-0.00;0.00}%' }">
+                            <Label.Triggers>
+                                <!--  Kolor zielony jeśli wartość większa od zera -->
+                                <DataTrigger TargetType="Label"
+                                             Binding="{Binding WiekszyOdZeraCalkowityProcent}"
+                                             Value="True">
+                                    <Setter Property="TextColor" Value="Green" />
+                                </DataTrigger>
+
+                                <!--  Kolor czerwony jeśli wartość mniejsza od zera -->
+                                <DataTrigger TargetType="Label"
+                                                 Binding="{Binding MniejszyOdZeraCalkowityProcent}"
+                                                 Value="True">
+                                    <Setter Property="TextColor" Value="Red" />
+                                </DataTrigger>
+                            </Label.Triggers>
+                        </Label>
+
+
+                    </VerticalStackLayout>
+
+
+
+                    <BoxView Grid.ColumnSpan="7"
+                                 HeightRequest="1"
+                                 VerticalOptions="End" />
+                </Grid>
+            </DataTemplate>
+        </CollectionView.ItemTemplate>
+        <CollectionView.Footer>
+            <Grid ColumnDefinitions="*,*,*,*,*,*,*"
+                          Padding="6"
+                          Margin="2"
+                          HeightRequest="50" >
+
+                <Label Text="Łącznie:" FontAttributes="Bold" TextColor="#E6EEF5"/>
+                <Label Text="-" Grid.Column="1" TextColor="#E6EEF5"/>
+                <Label Text="-" Grid.Column="2" TextColor="#E6EEF5"/>
+                <Label Text="-" Grid.Column="3" TextColor="#E6EEF5"/>
+
+                <!--Zysk i jego procent-->
+                <VerticalStackLayout Grid.Column="4">
+                    <Label x:Name="LabelZyskSuma" Text="{Binding ZyskSuma,StringFormat='{}{0:F2} zł' }" FontAttributes="Bold" TextColor="#E6EEF5"/>
+                    <Label x:Name="LabelZyskSumaProcent"  Text="{Binding ZyskSumaProcent,StringFormat='{0:+0.00;-0.00;0.00}%' }" FontAttributes="Bold" TextColor="#E6EEF5" >
+                        <Label.Triggers>
+                            <!--  Kolor zielony jeśli wartość większa od zera -->
+                            <DataTrigger TargetType="Label"
+                                         Binding="{Binding WiekszyOdZeraSumaProcent}"
+                                         Value="True">
+                                <Setter Property="TextColor" Value="Green" />
+                            </DataTrigger>
+
+                            <!--  Kolor czerwony jeśli wartość mniejsza od zera -->
+                            <DataTrigger TargetType="Label"
+                                         Binding="{Binding MniejszyOdZeraSumaProcent}"
+                                         Value="True">
+                                <Setter Property="TextColor" Value="Red" />
+                            </DataTrigger>
+                        </Label.Triggers>
+                    </Label>
+                </VerticalStackLayout>
+
+                <!--Zrealizowany zysk-->
+                <Label Text="{Binding LacznyZrealizowanyZyskSuma,StringFormat='{}{0:F2} zł' }" FontAttributes="Bold" Grid.Column="5" TextColor="#E6EEF5" />
+
+                <!--Całkowity zysk i jego procent-->
+
+                <VerticalStackLayout Grid.Column="6">
+                    <Label Text="{Binding CalkowityZyskSuma,StringFormat='{}{0:F2} zł' }" FontAttributes="Bold" TextColor="#E6EEF5"/>
+                    <Label x:Name="LabelCalkowityZyskSumaProcent" Text="{Binding CalkowityZyskSumaProcent,StringFormat='{0:+0.00;-0.00;0.00}%' }" FontAttributes="Bold"  >
+                        <Label.Triggers>
+                            <!--  Kolor zielony jeśli wartość większa od zera -->
+                            <DataTrigger TargetType="Label"
+                                         Binding="{Binding WiekszyOdZeraCalkowitySumaProcent}" 
+                                         Value="True">
+                                <Setter Property="TextColor" Value="Green" />
+                            </DataTrigger>
+
+                            <!--  Kolor czerwony jeśli wartość mniejsza od zera -->
+                            <DataTrigger TargetType="Label"
+                                         Binding="{Binding MniejszyOdZeraCalkowitySumaProcent}"
+                                         Value="True">
+                                <Setter Property="TextColor" Value="Red" />
+                            </DataTrigger>
+                        </Label.Triggers>
+                    </Label>
+                </VerticalStackLayout>
+
+
+
+            </Grid>
+
+
+        </CollectionView.Footer>
+
+
+
+    </CollectionView>
+</ContentView>

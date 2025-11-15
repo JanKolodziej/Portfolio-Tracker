@@ -48,9 +48,10 @@ namespace MauiApp1
         {
             KafelkiKonta.Ustaw_Wyglag_Kafelki(konto);
             WykresSP.Ustaw_Wyglad_SP500(konto);
+            Tabela.Ustaw_Tabele(konto);
 
 
-            
+
             //Zmiany tekstów po załadowaniu pliku
             PodajPlikLabel.Text = "Jeżeli chcesz, Dodaj kolejny konto do porównania";
             PrzyciskPlik.Text = "Dodaj Kolejny Plik";

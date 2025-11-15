@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="MauiApp1.InformacjeOKoncie">
+             x:Class="MauiApp1.InformacjeOKoncie"
+             xmlns:local="clr-namespace:MauiApp1"
+             >
 
     <!-- Tabela z podstawowymi informacjami o koncie Wplaty, Odsetki, Wartosc-->
     <FlexLayout Wrap="Wrap" JustifyContent="Start" AlignItems="Start" Margin="0">
         <!-- Wpłaty -->
-        <Border Style="{StaticResource CardBorderStyle}" Background="#062E38" WidthRequest="220">
+        <Border Style="{StaticResource CardBorderStyle}" Background="#2A3142" WidthRequest="220">
             <VerticalStackLayout Spacing="6">
                 <Label Text="Wpłaty na konto" Style="{StaticResource CardTitle}"/>
                 <Label x:Name="WplatyLabel" Text="{Binding WplatyText}" Style="{StaticResource CardValueLarge}"/>
@@ -15,7 +17,7 @@
         </Border>
 
         <!-- Odsetki -->
-        <Border Style="{StaticResource CardBorderStyle}" Background="#3B1E2F" WidthRequest="220">
+        <Border Style="{StaticResource CardBorderStyle}" Background="#322A3A" WidthRequest="220">
             <VerticalStackLayout Spacing="6">
                 <Label Text="Suma odsetek" Style="{StaticResource CardTitle}"/>
                 <Label x:Name="OdsetkiLabel" Text="{Binding OdsetkiText}" Style="{StaticResource CardValueLarge}"/>
@@ -24,7 +26,7 @@
         </Border>
 
         <!-- Zrealizowany zysk -->
-        <Border Style="{StaticResource CardBorderStyle}" Background="#2D1E47" WidthRequest="220">
+        <Border Style="{StaticResource CardBorderStyle}" Background="#2F2A3C" WidthRequest="220">
             <VerticalStackLayout Spacing="6">
                 <Label Text="Zrealizowany zysk" Style="{StaticResource CardTitle}"/>
                 <Label x:Name="ZyskLabel" Text="{Binding ZyskText}" Style="{StaticResource CardValueLarge}"/>
@@ -33,7 +35,7 @@
         </Border>
 
         <!-- Wynik -->
-        <Border Style="{StaticResource CardBorderStyle}" Background="#073923" WidthRequest="220">
+        <Border Style="{StaticResource CardBorderStyle}" Background="#24362F" WidthRequest="220">
             <VerticalStackLayout Spacing="6">
                 <Label Text="Wynik konta" Style="{StaticResource CardTitle}"/>
                 <Label x:Name="WynikKontaLabel" Text="{Binding WynikKontaText}" Style="{StaticResource CardValueLarge}">
