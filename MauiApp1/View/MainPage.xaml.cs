@@ -47,18 +47,12 @@ namespace MauiApp1
         private void Ustaw_Wygląd_MainPage(Konto konto)
         {
             KafelkiKonta.Ustaw_Wyglag_Kafelki(konto);
-            WykresSP.Ustaw_Wyglad_SP500(konto);
-            Tabela.Ustaw_Tabele(konto);
-
-
-
             //Zmiany tekstów po załadowaniu pliku
-            PodajPlikLabel.Text = "Jeżeli chcesz, Dodaj kolejny konto do porównania";
-            PrzyciskPlik.Text = "Dodaj Kolejny Plik";
+
             PickerKonto.IsVisible = true;
 
 
-            KontoSumaryczne.Tworzenie_Konta_Sumarycznego();
+
 
             PickerKonto.ItemsSource = Konto.ListaKont.Select((k, index) => $"Konto {index + 1} - {System.IO.Path.GetFileName(k.Nazwa)}").ToList();
 

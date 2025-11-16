@@ -13,14 +13,14 @@
         <VerticalStackLayout
             Padding="30,0"
             Spacing="25">
-            <Label x:Name="PodajPlikLabel" Text="Witaj Użytkowniku, potrzebuje żebyś podał mi plik, abym działał poprawnie" Style="{StaticResource SectionTitle}" />
-            <Button x:Name="PrzyciskPlik"  Text=" Plik z excela" Clicked="WybierzPlik"/>
+            <Label x:Name="PodajPlikLabel" Text="{Binding PodajPlikLabelText}" Style="{StaticResource SectionTitle}" />
+            <Button x:Name="PrzyciskPlik"  Text="{Binding PrzyciskPlikText}"  Clicked="WybierzPlik"/>
             
             <Picker x:Name ="PickerKonto"  Title="Picker" IsVisible="False" SelectedIndexChanged="PickerKonto_SelectedIndexChanged"/>
 
-            <local:InformacjeOKoncie x:Name="KafelkiKonta" />
-            
-            <local:WykresSP500 x:Name="WykresSP"/>
+            <local:InformacjeOKoncie x:Name="KafelkiKonta" BindingContext="{Binding  viewModelInformacjeOKoncie}" />
+
+            <local:WykresSP500 x:Name="WykresSP" BindingContext="{Binding wykresSP500ViewModel}"/>
 
             <FlexLayout Wrap="Wrap"  AlignItems="Start" Margin="0" >
                 <Border Style="{StaticResource CardBorderStyle}">
@@ -43,7 +43,7 @@
             <lvc:CartesianChart x:Name="WykresDywidendSlupki" x:DataType="local:MainPageViewModel"  WidthRequest="500" HeightRequest="500"  XAxes="{Binding XAxesSlupek} " YAxes="{Binding YAxesSlupek}" Series="{Binding SeriesSlupki}" />
             <lvc:CartesianChart x:Name="WykresDywidendSlupkiMiesiace" x:DataType="local:MainPageViewModel"  WidthRequest="1000" HeightRequest="500" Series="{Binding SeriesSlupkiMiesiace}" XAxes="{Binding XAxesSlupkiMiesiace}" YAxes="{Binding YAxesSlupkiMiesiace}" />
 
-            <local:TabelaZysku x:Name="Tabela"/>
+            <local:TabelaZysku x:Name="Tabela" BindingContext="{Binding tabelaZyskuViewModel}"/>
 
         </VerticalStackLayout>
     </ScrollView>

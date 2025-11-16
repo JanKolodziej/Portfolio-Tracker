@@ -19,13 +19,13 @@
                 </HorizontalStackLayout>
 
                 <Label x:Name="WynikSPLabel"
-                   Text="{Binding WynikSPText}"
+                   Text="{Binding WynikSp}"
                    Style="{StaticResource CardValueLarge}"
-                   TextColor="{Binding WynikSPColor, FallbackValue={StaticResource AccentGreen}}"/>
+                   TextColor="{StaticResource AccentGreen}"/>
 
-                <Label x:Name="LabelOstatniaAktualizacja" Text="{Binding OstatniaAktualizacjaText}" Style="{StaticResource CardValueSmall}"/>
+                <Label x:Name="LabelOstatniaAktualizacja" Text="{Binding OstatniaAktualizacja}" Style="{StaticResource CardValueSmall}"/>
 
-                <Button Text="Aktualizuj dane" Command="{Binding AktualizujCommand}"
+                <Button Text="Aktualizuj dane"
                     BackgroundColor="{StaticResource AccentOrange}" TextColor="#1B0B00" CornerRadius="8" Padding="10"/>
             </VerticalStackLayout>
         </Border>

@@ -4,8 +4,11 @@ namespace MauiApp1.Test
 {
     public class TestyPrzekrojowe
     {
+        /// <summary>
+        /// Test przekrojowy na podstawie pliku Plik_xtb_do_testow.xlsx
+        /// </summary>
         [Fact]
-        public void Test_Przkrojowy_Zamkniete_Pozycje()
+        public void Test_Przkrojowy_Zamkniete_Pozycje() 
         {
             List<ZamknietaPozycja> zamknietaPozycja = ZamknietaPozycja.Wczytaj_Dane_Z_Excela("Plik_xtb_do_testow.xlsx");
             List<OtwartaPozycja> otwartaPozycja = OtwartaPozycja.Wczytaj_Dane_Z_Excela("Plik_xtb_do_testow.xlsx");
@@ -22,6 +25,8 @@ namespace MauiApp1.Test
             Assert.Equal(testoweLista[0].Symbol, konto.ListaKwotDywidend[0].Symbol);
             Assert.Equal(202.5m - 271.408m + 8500m + 1330m + 12.31m, konto.WartoscKonta);
             Assert.Equal((202.5m - 271.408m + 1330m + 12.31m) / 85, konto.WynikKonta);
+
+
 
 
 
