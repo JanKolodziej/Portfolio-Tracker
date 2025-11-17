@@ -11,7 +11,7 @@
         <Border Style="{StaticResource CardBorderStyle}" Background="#2A3142" WidthRequest="220">
             <VerticalStackLayout Spacing="6">
                 <Label Text="Wpłaty na konto" Style="{StaticResource CardTitle}"/>
-                <Label x:Name="WplatyLabel" Text="{Binding WplatyText}" Style="{StaticResource CardValueLarge}"/>
+                <Label  Text="{Binding WplatyLabelText}" Style="{StaticResource CardValueLarge}"/>
                 <Label Text="Różnica Wpłat i Wypłat" Style="{StaticResource CardValueSmall}"/>
             </VerticalStackLayout>
         </Border>
@@ -20,7 +20,7 @@
         <Border Style="{StaticResource CardBorderStyle}" Background="#322A3A" WidthRequest="220">
             <VerticalStackLayout Spacing="6">
                 <Label Text="Suma odsetek" Style="{StaticResource CardTitle}"/>
-                <Label x:Name="OdsetkiLabel" Text="{Binding OdsetkiText}" Style="{StaticResource CardValueLarge}"/>
+                <Label  Text="{Binding OdsetkiLabelText}" Style="{StaticResource CardValueLarge}"/>
                 <Label Text="Od wolnych środków" Style="{StaticResource CardValueSmall}"/>
             </VerticalStackLayout>
         </Border>
@@ -29,7 +29,7 @@
         <Border Style="{StaticResource CardBorderStyle}" Background="#2F2A3C" WidthRequest="220">
             <VerticalStackLayout Spacing="6">
                 <Label Text="Zrealizowany zysk" Style="{StaticResource CardTitle}"/>
-                <Label x:Name="ZyskLabel" Text="{Binding ZyskText}" Style="{StaticResource CardValueLarge}"/>
+                <Label Text="{Binding ZyskLabelText}" Style="{StaticResource CardValueLarge}"/>
                 <Label Text="Sprzedane pozycje" Style="{StaticResource CardValueSmall}"/>
             </VerticalStackLayout>
         </Border>
@@ -38,8 +38,7 @@
         <Border Style="{StaticResource CardBorderStyle}" Background="#24362F" WidthRequest="220">
             <VerticalStackLayout Spacing="6">
                 <Label Text="Wynik konta" Style="{StaticResource CardTitle}"/>
-                <Label x:Name="WynikKontaLabel" Text="{Binding WynikKontaText}" Style="{StaticResource CardValueLarge}">
-                </Label>
+                <Label  Text="{Binding WynikKontaLabelText}" Style="{StaticResource CardValueLarge}"/>
                 <Label Text="Skumulowany" Style="{StaticResource CardValueSmall}"/>
             </VerticalStackLayout>
         </Border>

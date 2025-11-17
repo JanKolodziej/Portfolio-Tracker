@@ -17,8 +17,12 @@ namespace MauiApp1
     [Observable]
     public partial class MainPageViewModel 
     {
+        
+      
         public string PodajPlikLabelText { get; set; } = "Witaj Użytkowniku, potrzebuje żebyś podał mi plik, abym działał poprawnie";
         public string PrzyciskPlikText { get; set; } = " Plik z excela";
+
+
 
         //Wykres kołowy
         public IEnumerable<ISeries> SeriesKolowyDywidendy { get; set; } = new ISeries[0];
@@ -40,6 +44,27 @@ namespace MauiApp1
         public TabelaZyskuViewModel tabelaZyskuViewModel { get; set; }
         public ViewModelInformacjeOKoncie viewModelInformacjeOKoncie { get; set; }
 
+        public ObservableCollection<Konto> KontoList { get; set; } = Konto.ListaKont;
+
+
+
+
+        [NotObservable]
+        private Konto? _wybraneKonto;
+        public Konto? WybraneKonto
+        {
+            get => _wybraneKonto;
+            set
+            {
+                if(_wybraneKonto != value && value != null)
+                {
+                    _wybraneKonto = value;
+                    OnPropertyChanged(nameof(WybraneKonto));
+                    Ustaw_Wyglad(_wybraneKonto);
+                }
+            }
+        }
+
         public MainPageViewModel()
         {
             wykresSP500ViewModel = new WykresSP500ViewModel();
@@ -56,7 +81,7 @@ namespace MauiApp1
             Ustaw_Dane_Wykresow(konto);
             Ustaw_Dane_W_Innych_VM(konto);
 
-            KontoSumaryczne.Tworzenie_Konta_Sumarycznego();
+
             PodajPlikLabelText = "Jeżeli chcesz, Dodaj kolejny konto do porównania";
             PrzyciskPlikText = "Dodaj Kolejny Plik";
 

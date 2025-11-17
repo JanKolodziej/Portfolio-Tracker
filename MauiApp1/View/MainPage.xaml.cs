@@ -34,48 +34,11 @@ namespace MauiApp1
             if (konto != null)
             {
                 viewModel.Ustaw_Wyglad(konto);
-                Ustaw_Wygląd_MainPage(konto);
+                KontoSumaryczne.Tworzenie_Konta_Sumarycznego();
+                PickerKonto.IsVisible = true;
             }
 
-        }
-
-
-        /// <summary>
-        /// Ustawia wygląd MainPage 
-        /// </summary>
-        /// <param name="konto"></param>
-        private void Ustaw_Wygląd_MainPage(Konto konto)
-        {
-            KafelkiKonta.Ustaw_Wyglag_Kafelki(konto);
-            //Zmiany tekstów po załadowaniu pliku
-
-            PickerKonto.IsVisible = true;
-
-
-
-
-            PickerKonto.ItemsSource = Konto.ListaKont.Select((k, index) => $"Konto {index + 1} - {System.IO.Path.GetFileName(k.Nazwa)}").ToList();
-
-            for (int i = 0; i < Konto.ListaKont.Count; i++)
-            {
-                if (Konto.ListaKont[i] == konto)
-                {
-                    PickerKonto.SelectedIndex = i;
-                    break;
-                }
-
-            }
-        }
-
-        /// <summary>
-        /// Metoda obsługująca wybór pozycji w Picker Konta
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void PickerKonto_SelectedIndexChanged(object sender, EventArgs e)
-        {
-                Ustaw_Wygląd_MainPage(Konto.ListaKont[PickerKonto.SelectedIndex]);
-            
         }
     }
+
 }

@@ -1,4 +1,6 @@
-﻿namespace Biblioteka_Klas
+﻿using System.Collections.ObjectModel;
+
+namespace Biblioteka_Klas
 {
     /// <summary>
     /// Przechowuje kwoty dywidend z podziałem na symbole np XTB.PL , 50 zł
@@ -21,7 +23,7 @@
     /// </summary>
     public class Konto
     {
-        public static List<Konto> ListaKont = new();  //Lista wszystkich kont
+        public static ObservableCollection<Konto> ListaKont = new();  //Lista wszystkich kont
         public decimal Wplaty { get; set; }
         public decimal Odsetki { get; set; }
         //Listy Pozycji/Operacji ***************

@@ -71,4 +71,5 @@
         <Setter Property="WidthRequest" Value="360"/>
         <Setter Property="Margin" Value="8"/>
     </Style>
+    
 </ResourceDictionary>
