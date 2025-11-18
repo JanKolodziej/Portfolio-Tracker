@@ -25,8 +25,7 @@
 
                 <Label x:Name="LabelOstatniaAktualizacja" Text="{Binding OstatniaAktualizacja}" Style="{StaticResource CardValueSmall}"/>
 
-                <Button Text="Aktualizuj dane"
-                    BackgroundColor="{StaticResource AccentOrange}" TextColor="#1B0B00" CornerRadius="8" Padding="10"/>
+
             </VerticalStackLayout>
         </Border>
 

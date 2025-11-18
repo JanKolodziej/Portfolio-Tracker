@@ -11,6 +11,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace MauiApp1
 {
@@ -47,7 +48,8 @@ namespace MauiApp1
         public ObservableCollection<Konto> KontoList { get; set; } = Konto.ListaKont;
 
 
-
+        public bool CzyPickerWidoczny {  get; set; }
+        public ICommand WybierzPlikCommand { get;  }
 
         [NotObservable]
         private Konto? _wybraneKonto;
@@ -70,6 +72,23 @@ namespace MauiApp1
             wykresSP500ViewModel = new WykresSP500ViewModel();
             tabelaZyskuViewModel = new TabelaZyskuViewModel();
             viewModelInformacjeOKoncie = new ViewModelInformacjeOKoncie();
+            WybierzPlikCommand = new Command(async () => await WybierzPlik());
+
+        }
+        /// <summary>
+        /// Metoda wywoływana przez WybierzPlikButton, wczytuje plik i go przetwarza
+        /// </summary>
+        private async Task WybierzPlik()
+        {
+
+            var konto = await new ObsługaPliku().Wczytaj_Plik();
+
+            if (konto != null)
+            {
+                Ustaw_Wyglad(konto);
+                KontoSumaryczne.Tworzenie_Konta_Sumarycznego();
+                CzyPickerWidoczny = true;
+            }
 
         }
 

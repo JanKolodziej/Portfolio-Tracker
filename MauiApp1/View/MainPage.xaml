@@ -14,9 +14,15 @@
             Padding="30,0"
             Spacing="25">
             <Label x:Name="PodajPlikLabel" Text="{Binding PodajPlikLabelText}" Style="{StaticResource SectionTitle}" />
-            <Button x:Name="PrzyciskPlik"  Text="{Binding PrzyciskPlikText}"  Clicked="WybierzPlik"/>
+            <Button x:Name="PrzyciskPlik"  Text="{Binding PrzyciskPlikText}"  Command="{Binding WybierzPlikCommand}"/>
             
-            <Picker x:Name ="PickerKonto"  Title="" IsVisible="False" ItemsSource="{Binding KontoList}" ItemDisplayBinding="{Binding Nazwa}" SelectedItem="{Binding WybraneKonto}"/>
+            <Picker x:Name ="PickerKonto"  Title="Wybierz które Konto chcesz zobaczyć" TitleColor="{StaticResource MutedText}"
+                    BackgroundColor="{StaticResource CardBgElevated}"
+                    IsVisible="{Binding CzyPickerWidoczny}" 
+                    ItemsSource="{Binding KontoList}" 
+                    ItemDisplayBinding="{Binding Nazwa}" 
+                    SelectedItem="{Binding WybraneKonto}" 
+                    Style="{StaticResource CardValueSmall}"/>
             
 
             <local:InformacjeOKoncie BindingContext="{Binding  viewModelInformacjeOKoncie}" />
