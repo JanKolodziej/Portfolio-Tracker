@@ -15,7 +15,7 @@ namespace MauiApp1.Test
             List<OperacjeGotowkowe> operacjeGotowkowe = OperacjeGotowkowe.Wczytaj_Dane_Z_Excela("Plik_xtb_do_testow.xlsx");
             Konto konto = new(operacjeGotowkowe, zamknietaPozycja, otwartaPozycja, "Konto Testowe");
 
-            SP500Pozycja.ListaSP500PozycjaDnia = await SQLiteDane.WczytajSP500();
+            SP500Pozycja.ListaSP500PozycjaDnia = await SQLiteDane.WczytajSP500(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Baza_SP500.db"));
 
             Assert.Equal(-271.4080000m, konto.ZyskNaZamknietychPozycjach);
             Assert.Equal(8500, konto.Wplaty);

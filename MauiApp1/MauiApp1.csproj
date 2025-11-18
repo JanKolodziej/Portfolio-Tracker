@@ -109,13 +109,13 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Content Include="Baza_SP500.db">
+	  <Content Include="Data\Baza_SP500.db">
 	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	  </Content>
 	  <Content Include="GlobalXmlns.cs">
 	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	  </Content>
-	  <MauiAsset Include="LaczenieDolaraiSp500.sql" />
+	  <MauiAsset Include="Data\LaczenieDolaraiSp500.sql" />
 	</ItemGroup>
 
 	<ItemGroup>
