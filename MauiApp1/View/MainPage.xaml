@@ -43,12 +43,28 @@
                         <lvc:PieChart Series="{Binding SeriesKolowyOtwarte}" WidthRequest="360" HeightRequest="360"/>
                     </VerticalStackLayout>
                 </Border>
+                <Border Style="{StaticResource CardBorderStyle}">
+                    <VerticalStackLayout>
+                        <Label Text="Dywidendy na przestrzeni lat" Style="{StaticResource CardTitle}"/>
+                        <lvc:CartesianChart x:Name="WykresDywidendSlupki"
+                                            x:DataType="local:MainPageViewModel" 
+                                            WidthRequest="360" HeightRequest="360"  
+                                            XAxes="{Binding XAxesSlupek} " 
+                                            YAxes="{Binding YAxesSlupek}" 
+                                            Series="{Binding SeriesSlupki}" />
+                    </VerticalStackLayout>
+                </Border>
             </FlexLayout>
 
 
 
-            <lvc:CartesianChart x:Name="WykresDywidendSlupki" x:DataType="local:MainPageViewModel"  WidthRequest="500" HeightRequest="500"  XAxes="{Binding XAxesSlupek} " YAxes="{Binding YAxesSlupek}" Series="{Binding SeriesSlupki}" />
-            <lvc:CartesianChart x:Name="WykresDywidendSlupkiMiesiace" x:DataType="local:MainPageViewModel"  WidthRequest="1000" HeightRequest="500" Series="{Binding SeriesSlupkiMiesiace}" XAxes="{Binding XAxesSlupkiMiesiace}" YAxes="{Binding YAxesSlupkiMiesiace}" />
+
+            <lvc:CartesianChart x:Name="WykresDywidendSlupkiMiesiace" 
+                                x:DataType="local:MainPageViewModel"  
+                                WidthRequest="1000" HeightRequest="500" 
+                                Series="{Binding SeriesSlupkiMiesiace}" 
+                                XAxes="{Binding XAxesSlupkiMiesiace}" 
+                                YAxes="{Binding YAxesSlupkiMiesiace}" />
 
             <local:TabelaZysku  BindingContext="{Binding tabelaZyskuViewModel}"/>
 

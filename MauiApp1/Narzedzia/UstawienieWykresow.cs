@@ -271,7 +271,8 @@ namespace MauiApp1
                     Name = "Dywidendy",
                     Values = dywidendyPoRoku.Select(g => g.Suma).ToArray(),
                     MaxBarWidth = 1000,
-                    Padding = 50
+                    Padding= 10
+                    
                 }
             };
 
