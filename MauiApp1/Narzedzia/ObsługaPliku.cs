@@ -17,43 +17,31 @@ namespace MauiApp1
                 { DevicePlatform.MacCatalyst, new[] { "org.openxmlformats.spreadsheetml.sheet" } }
             });
 
-            // Jeśli lista SP500 nie jest jeszcze wczytana, wczytaj ją asynchronicznie
             if (SP500Pozycja.ListaSP500PozycjaDnia.Count == 0)
             {
                 SP500Pozycja.ListaSP500PozycjaDnia = await Biblioteka_Klas.SQLiteDane.WczytajSP500(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data\\Baza_SP500.db"));
             }
 
-            // Otwórz okno wyboru pliku
+
             var plik = await FilePicker.Default.PickAsync(new PickOptions
             {
                 PickerTitle = "Wybierz plik pobrany z XTB",
                 FileTypes = customFileType,
             });
 
-            // Użytkownik anulował
+
             if (plik == null)
                 return null;
 
             string sciezka = plik.FullPath;
 
-            //  (opcjonalnie) sprawdzenie, czy już wczytano ten plik:
-            /*
-            foreach (Konto konto1 in Konto.ListaKont)
-            {
-                if (konto1.Path == sciezka)
-                {
-                    await DisplayAlert("Błąd", "Ten plik jest już wczytany do programu.", "OK");
-                    return null;
-                }
-            }
-            */
 
-            // Wczytaj dane z Excela (jeśli te metody są synchroniczne, nie musisz ich awaitować)
+
             var otwarte = OtwartaPozycja.Wczytaj_Dane_Z_Excela(sciezka);
             var zamkniete = ZamknietaPozycja.Wczytaj_Dane_Z_Excela(sciezka);
             var gotowkowe = OperacjeGotowkowe.Wczytaj_Dane_Z_Excela(sciezka);
 
-            // Utwórz konto z danymi
+
             Konto konto = new(gotowkowe, zamkniete, otwarte, sciezka);
 
             return konto;
