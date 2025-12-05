@@ -16,6 +16,7 @@ namespace MauiApp1
                 { DevicePlatform.WinUI, new[] { ".xlsx", ".xls" } },
                 { DevicePlatform.MacCatalyst, new[] { "org.openxmlformats.spreadsheetml.sheet" } }
             });
+            await Biblioteka_Klas.SQLiteDane.Aktualizacja_Danych(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data\\Baza_SP500.db"));
 
             if (SP500Pozycja.ListaSP500PozycjaDnia.Count == 0)
             {
