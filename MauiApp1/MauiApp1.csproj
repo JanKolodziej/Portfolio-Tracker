@@ -110,7 +110,7 @@
 
 	<ItemGroup>
 	  <Content Include="Data\Baza_SP500.db">
-	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	    <CopyToOutputDirectory>Never</CopyToOutputDirectory>
 	  </Content>
 	  <Content Include="GlobalXmlns.cs">
 	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

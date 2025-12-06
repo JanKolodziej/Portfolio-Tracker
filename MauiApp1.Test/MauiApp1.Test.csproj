@@ -9,7 +9,7 @@
 
   <ItemGroup>
     <Content Include="Baza_SP500.db">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
 
