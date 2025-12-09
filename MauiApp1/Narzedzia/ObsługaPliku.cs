@@ -33,10 +33,6 @@ namespace MauiApp1
             {
                 SP500Pozycja.ListaSP500PozycjaDnia = await Biblioteka_Klas.SQLiteDane.WczytajSP500(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data\\Baza_SP500.db"));
             }
-            foreach(var p in SP500Pozycja.ListaSP500PozycjaDnia)
-            {
-                Debug.WriteLine($"{p.Data} {p.CenaSrednia}");
-            }
 
             var plik = await FilePicker.Default.PickAsync(new PickOptions
             {

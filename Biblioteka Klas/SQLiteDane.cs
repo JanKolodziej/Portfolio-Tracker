@@ -48,7 +48,7 @@ namespace Biblioteka_Klas
 
                 DateTime Dzisiaj = DateTime.Now.Date;
                 DateTime startDateUtc = new DateTime(Dzisiaj.Year, Dzisiaj.Month, Dzisiaj.Day, 0, 0, 0, DateTimeKind.Utc);
-                if (DateTime.Compare(Dzisiaj, OstatniSP.Data.Date.AddDays(2)) <= 0)
+                if ((Dzisiaj-OstatniSP.Data).Days <2)
                 {
                     Debug.WriteLine("Baza Aktualna");
                     return;

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Text.Json;
@@ -62,14 +63,22 @@ namespace Biblioteka_Klas
         /// <returns></returns>
         private static async Task<YahooResponse?> Laczenie_Z_Yahoo_SP500(DateTime ostatniaData, DateTime dzisiaj, HttpClient client)
         {
-            long OstatniaDataUnix = ((DateTimeOffset)(ostatniaData.Date.AddDays(1))).ToUnixTimeSeconds();
-            long DataDzisiejszaUnix = ((DateTimeOffset)(dzisiaj.Date.AddDays(-1))).ToUnixTimeSeconds();
-            string yahooUrl = $"https://query1.finance.yahoo.com/v8/finance/chart/%5EGSPC?period1={OstatniaDataUnix}&period2={DataDzisiejszaUnix}&interval=1d";
-            var yahooJson = await client.GetStringAsync(yahooUrl);
-            YahooResponse? yahooData = JsonSerializer.Deserialize<YahooResponse>(yahooJson);
-            return yahooData;
-            
-        }
+            try
+            { 
+                long OstatniaDataUnix = ((DateTimeOffset)(ostatniaData.Date.AddDays(1))).ToUnixTimeSeconds();
+                long DataDzisiejszaUnix = ((DateTimeOffset)(dzisiaj.Date.AddDays(-1))).ToUnixTimeSeconds();
+                string yahooUrl = $"https://query1.finance.yahoo.com/v8/finance/chart/%5EGSPC?period1={OstatniaDataUnix}&period2={DataDzisiejszaUnix}&interval=1d";
+                var yahooJson = await client.GetStringAsync(yahooUrl);
+                YahooResponse? yahooData = JsonSerializer.Deserialize<YahooResponse>(yahooJson);
+                return yahooData;
+            }
+            catch(Exception ex)
+            {
+                Debug.WriteLine($"Wyjatek przy Laczenie Z Yahoo {ex}");
+                return null;
+            }
+
+}
 
         /// <summary>
         /// Laczy się z NBP i pobiera kurs dolara
@@ -80,11 +89,21 @@ namespace Biblioteka_Klas
         /// <returns></returns>
         private static async Task<NBPResponse?> Laczenienie_Z_NBP_Dolar(DateTime ostatniaData, DateTime dzisiaj, HttpClient client)
         {
-            //Api daje kursy wlacznie, a poniewaz kurs Ostatni juz mamy, a kurs dzisiejszy jeszcze nie jest ustalony(rynek otwarty) to musimy zawęzić
-            string nbpUrl = $"https://api.nbp.pl/api/exchangerates/rates/a/usd/{ostatniaData.AddDays(1):yyyy-MM-dd}/{dzisiaj.AddDays(-1):yyyy-MM-dd}/?format=json";
-            var nbpJson = await client.GetStringAsync(nbpUrl);
-            var nbpData = JsonSerializer.Deserialize<NBPResponse>(nbpJson);
-            return nbpData;
+            try
+            {
+                //Api daje kursy wlacznie, a poniewaz kurs Ostatni juz mamy, a kurs dzisiejszy jeszcze nie jest ustalony(rynek otwarty) to musimy zawęzić
+                string nbpUrl = $"https://api.nbp.pl/api/exchangerates/rates/a/usd/{ostatniaData.AddDays(1):yyyy-MM-dd}/{dzisiaj.AddDays(-1):yyyy-MM-dd}/?format=json";
+                var nbpJson = await client.GetStringAsync(nbpUrl);
+                var nbpData = JsonSerializer.Deserialize<NBPResponse>(nbpJson);
+                return nbpData;
+
+            }
+            catch(Exception ex)
+            {
+                Debug.WriteLine($"Wyjatek przy Laczenie Z NBP {ex}");
+                return null;
+            }
+            
 
         }
     }

@@ -40,11 +40,12 @@ namespace MauiApp1
                         {
                             listaSp.RemoveAt(listaSp.Count - 1);
                         }
-                        else if (operacja.Date.Date > listaSp.Last().DateTime.Date.AddDays(1))
+                        else if (operacja.Date.Date > listaSp.Last().DateTime.Date) //Jeżeli data jest późniejsza
                         {
-                            for (int i = 1; i < (operacja.Date.Date - listaSp.Last().DateTime.Date).Days; i++)
+                            DateTime ostatniaTranzakcja = listaSp.Last().DateTime.Date;
+                            for (int i = 1; i < (operacja.Date.Date - ostatniaTranzakcja).Days; i++) //Przechodzimy po wszystkich dniach pomiędzy datami
                             {
-                                SP500Pozycja SP = SP500Pozycja.Znajdz_Najblizszy_Sp(listaSp.Last().DateTime.Date.AddDays(1));
+                                SP500Pozycja SP = SP500Pozycja.Znajdz_Najblizszy_Sp(listaSp.Last().DateTime.Date.AddDays(1));// I dodajemy punkty do wykresu
                                 listaSp.Add(new DateTimePoint(listaSp.Last().DateTime.Date.AddDays(1), Math.Round(Convert.ToDouble(liczbaPozycjiNaSP * SP.KursDolara * SP.CenaSrednia), 2)));
 
                             }
