@@ -64,7 +64,7 @@ Solution
 
 1. **Clone the repository:**
    ```bash
-   git clone [https://github.com/JanKolodziej/Portfolio-Tracker.git](https://github.com/JanKolodziej/Portfolio-Tracker.git)
+   git clone https://github.com/JanKolodziej/Portfolio-Tracker.git
    ```
 2. **Open the solution:**
    Open the `.sln` file in **Visual Studio 2022**.
